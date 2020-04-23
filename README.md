@@ -43,7 +43,7 @@
 #### Description
 This sample project created to show how distributed processing is performed on the CONUN distributed supercomputing platform. The sample project is a program which is quickly find the encrypted key using the AES_CBC algorithm. However, our sample project can be handeled with a maximum of 256 PC providers.<br>
 -	In this sample project, you need data.zip(tasks and info.txt) and AESVerification.zip
--	You can download them from [github](https://https://github.com/CONUN-Global/CONUN/tree/master/sample).
+-	You can download them from [github](https://github.com/CONUN-Global/CONUN/tree/master/sample).
 -	It is possible to test max 256 task processors in one project.
 
 #### How to test sample project?
