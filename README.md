@@ -35,9 +35,9 @@
   
   [Detail Information](https://docs.conun.io/)
 
-## How to get Token from Testnet
+## How to get Token for your Test from Testnet
 * Link to get free CON Token from CONUN Testnet. [Link](https://getcon.conun.io)<br>
-* Link to get free ETH form RopstenTestnet. [Link](https://faucet.ropsten.be/)
+* Link to get free ETH form Ropsten Testnet. [Link](https://faucet.ropsten.be/)
   
 ## Sample Project
 #### Description
