@@ -28,7 +28,7 @@
 ## Installation & guide
   * **Installation**<br><br>
   Step 1: Install Docker for Windows, downloaded the installer (Docker Desktop Installer.exe), you can get it from Docker Hub  [here](https://hub.docker.com/editions/community/docker-ce-desktop-windows/).<br><br>
-  Step 2: Install (Conun Manager.exe) file, you can get it from [here.](https://docs.conun.io/)<br><br>
+  Step 2: Install (CONUN Manager.exe) file, you can get it from [here.](https://docs.conun.io/)<br><br>
   Step 3: Download Task processor & Utility of Create Project.
   You can get it from [here.](https://docs.conun.io/)<br>
   
