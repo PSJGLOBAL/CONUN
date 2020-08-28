@@ -1,0 +1,6 @@
+<svg id="eth_logo" xmlns="http://www.w3.org/2000/svg" width="64" height="100" viewBox="0 0 64 100">
+  <path id="교차_1" data-name="교차 1" d="M0,100V79.509l32-21.32ZM0,72.691V0L32,52.236Z" transform="translate(31.999)" fill="#2f3030"/>
+  <path id="빼기_1" data-name="빼기 1" d="M32,100l-.006-.008L0,58.189l32,21.32V100Zm0-27.309,0,0L0,52.236,32,0V72.691Z" transform="translate(0)" fill="#828384"/>
+  <path id="빼기_2" data-name="빼기 2" d="M32,35.594l0,0L0,15.138,32,0V35.594Z" transform="translate(0 37.096)" fill="#343535"/>
+  <path id="교차_2" data-name="교차 2" d="M0,0,32,15.138,0,35.594Z" transform="translate(31.998 37.096)" fill="#131313"/>
+</svg>

@@ -1,0 +1,9 @@
+node_modules/
+private/
+.DS_Store
+.idea
+.gitignore
+package-lock.json
+dist
+src/modules/
+*.nsh

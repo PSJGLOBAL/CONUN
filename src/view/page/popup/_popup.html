@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+    <meta charset="utf-8" name="viewport" content="width=device-width, height=device-height, user-scalable=yes">
+    <!-- css & js -->
+    <script src="../../vendor/js/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="../../css/common.css"/>
+    <style>
+      style { display: none; }
+      form.popup {
+        display: flex;flex-direction: column;
+      }
+      form.popup>div {
+        width: 100%; display: flex;
+        justify-content: space-around;
+      }
+      #pop_text {
+        flex-direction: column;
+        text-align: center;
+        height: calc(100% - 40px);
+        font-size: 1.125em;
+        padding:0 30px;
+        box-sizing: border-box;
+        font-weight: bold;
+      }
+      #pop_type {
+        flex-direction: row;
+        height: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <form class="popup">
+      <div id="pop_text"><p></p></div>
+      <div id="pop_type"></div>
+    </form>
+    <script src="../../vendor/js/common.js"></script>
+
+    <script type="text/javascript">
+      var request = new Request();
+      $('#pop_text>p').text(request.getParameter('pop_text'));
+
+      $(document).ready(function(){
+        if(type == "yn"){
+          $('form.popup').css({'height':$(window).height()})
+          var $type = null;
+          var type = request.getParameter('pop_type');
+          var auto = request.getParameter('auto');
+          $auto = auto/1000;
+
+          $type = "<button type='button' onclick='window.close()' class='form half thin'>No</button><button type='button' class='form half thin' name=''>Yes</button>";
+        }else if(type == "close"){
+          $type = "<button type='button' onclick='window.close()' class='clear'><img src='../../img/icon/ico_cancel_10.svg'> Close</button>";
+        }else if(type == "blank"){
+          $type = "<p style='font-size:13px;color:#929292;'>The window closes in " + $auto + " seconds.</p>";
+          setTimeout(function(){
+            window.close();
+          },auto )
+        }
+        $('#pop_type').append($type);
+      })
+    </script>
+  </body>
+</html>

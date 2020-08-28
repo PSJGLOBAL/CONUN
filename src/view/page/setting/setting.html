@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- meta -->
+  <meta charset="utf-8" name="viewport" content="width=device-width, height=device-height, user-scalable=yes">
+  <!-- css & js -->
+  <link rel="stylesheet" href="../../css/common.css"/>
+  <link rel="stylesheet" href="../../css/toggle.css"/>
+  <!-- <link rel="stylesheet" href="../css/media.css"/> -->
+<!--  <script src="../js/jquery-3.4.1.min.js"></script>-->
+  <!-- title -->
+  <title>CONUN Manager</title>
+</head>
+<body>
+<section id="default">
+  <!-- left menu -->
+  <nav style="grid-area: nav;">
+    <a href="#"><img src="../../img/main_logo.svg" alt="CONUN DSC Logo" title="CONUN DSC Logo"></a>
+    <ul class="menu" id="menu">
+      <li><p><a href="../home.html"><img src="../../img/icon/ico_home.svg" alt="home" title="home">Home</a></p></li>
+      <li class="d">
+        <p><img src="../../img/icon/ico_conun.svg" alt="CONUN" title="CONUN">CONUN</p>
+        <ul class="menu">
+          <li><p><a href="../conun/requester.html"><img src="../../img/icon/ico_req.svg" alt="Requester" title="Requester">Requester</a></p></li>
+          <li><p><a href="../conun/provider.html"><img src="../../img/icon/ico_prov.svg" alt="Provider" title="Provider">Provider</a></p></li>
+          <!-- <li><img src="../img/icon/ico_logs.svg" alt="Logs" title="Logs">Logs</li> -->
+        </ul>
+      </li>
+      <li class="d">
+        <p><img src="../../img/icon/ico_wallet.svg" alt="Wallet" title="Wallet">Wallet</p>
+        <ul class="menu">
+          <li><p><a href="../wallet/transaction.html"><img src="../../img/icon/ico_trans.svg" alt="Transaction" title="Transaction">Transaction</a></p></li>
+          <li><p><a href="../wallet/management.html"><img src="../../img/icon/ico_wallet_manage.svg" alt="Manage" title="Manage">Manage</a></p></li>
+<!--          <li><p><img src="../../img/icon/ico_history.svg" alt="History" title="History">History</p></li>-->
+        </ul>
+      </li>
+      <li class="on"><p><img src="../../img/icon/ico_setting.svg" alt="Setting" title="Setting">Setting</p></li>
+    </ul>
+    <ul id="menu_etc">
+      <li><a href="http://conun.io" target="_blank"><img src="../../img/icon/ico_globe.svg" alt="website" title="website" style="vertical-align:middle;"> conun.io</a></li>
+      <li>Version 0.1</li>
+    </ul>
+  </nav>
+  <!-- contents -->
+  <section class="grid sub" style="grid-area: content;">
+    <article class="area narrow" style="grid-area: status;" area="status">
+      <p><img src="../../img/icon/ico_network.svg" alt="network" title="network"> Network Status<span id="txt_network_status"></span></p>
+      <p>Workable Nodes<span id="txt_node_count"></span></p>
+      <button type="button" name="minimize" class="clear">
+        Minimize <img src="../../img/icon/ico_mini.svg" alt="minimize" title="minimize">
+      </button>
+    </article>
+    <!-- 내용은 이 아래 영역 안에 -->
+    <article class="area" style="grid-area: contbox; overflow-y:scroll;" area="contbox">
+      <section class="setting flex">
+        <p class="paragraph">Account</p>
+        <button type="button" name="account_logout" id="account_logout" class="small">Logout</button>
+      </section>
+      <section class="setting flex">
+        <p class="paragraph">Software Version</p>
+        <p class="paragraph min gray">0.1.0</p>
+        <button type="button" name="check_version" id="check_version" class="small">Check Update</button>
+      </section>
+      <section class="setting flex" style="flex-wrap:wrap;">
+        <p class="paragraph">Resource Control</p>
+        <div class="flex">
+          <p class="paragraph min">CPU</p>
+          <div class="meter">
+            <button type="button" name="cpu" id="meter_cpu"></button>
+            <input type="number" value="30" class="resource_ctrl" name="resource_ctrl" min="0" max="100" step="1" id="cpu">
+            <div class="gauge" id="cpu1">
+              <span></span>
+            </div>
+          </div>
+
+        </div>
+        <div class="flex">
+          <p class="paragraph min">RAM</p>
+          <div class="meter">
+            <button type="button" name="ram" id="meter_ram"></button>
+            <input type="number" value="65" class="resource_ctrl" name="resource_ctrl" min="0" max="100" step="1" id="ram">
+            <div class="gauge" id="ram1">
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div class="flex">
+          <p class="paragraph min">DISK</p>
+          <div class="meter">
+            <button type="button" name="disk" id="meter_disk"></button>
+            <input type="number" value="50" class="resource_ctrl" name="resource_ctrl" min="0" max="100" step="1" id="disk">
+            <div class="gauge" id="disk1">
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="setting flex">
+        <p class="paragraph">Language</p>
+        <p id="txt_current_language" class="paragraph min gray"></p>
+        <!-- <button type="button" name="change_lang" id="change_lang" class="small">Change</button> -->
+      </section>
+      <section class="setting flex">
+        <p class="paragraph">Requester Mode</p>
+        <input type="checkbox" id="switch_req_mod" /><label for="switch_req_mod"></label>
+      </section>
+      <section class="setting flex">
+        <p class="paragraph">Provider Mode</p>
+        <input type="checkbox" id="switch_pro_mod" /><label for="switch_pro_mod"></label>
+      </section>
+      <section class="setting flex" style="flex-wrap:wrap;">
+        <p class="paragraph">Path</p>
+        <div class="flex">
+          <p class="paragraph min">Requester Path</p>
+          <p class="paragraph min gray">
+            <input type="text" readonly name="path" class="resource_ctrl" id="req_path">
+          </p>
+          <button type="button" name="change_req_path" id="change_req_path" class="small">Change Path</button>
+        </div>
+        <div class="flex">
+          <p class="paragraph min">Provider Path</p>
+          <p class="paragraph min gray">
+            <input type="text" readonly name="path" class="resource_ctrl" id="prov_path">
+          </p>
+          <button type="button" name="change_prov_path" id="change_prov_path" class="small">Change Path</button>
+        </div>
+      </section>
+      <section class="setting">
+        <button type="button" name="apply_set_change" id="apply_set_change" class="form thin fill" disabled>Apply Changes</button>
+            <span class="flex etc" style="color:#929292;">
+              <a style="color:#929292;" href="https://t.me/s/conun_global?before=11" target="_blank">Help</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+              <a style="color:#929292;">Remove Account</a> <!-- Add onclick function or others here. -->
+            </span>
+      </section>
+
+    </article>
+  </section>
+</section>
+
+<script src="../../vendor/js/jquery-3.4.1.min.js"></script>
+<script type="application/javascript">
+  if (typeof module === 'object' && typeof module.exports !== 'undefined') {
+    window.$ = window.jQuery = module.exports;
+  }
+</script>
+<script type="text/javascript" src="../../vendor/js/common.js"></script>
+<script>
+  const {appLocation} = require('../../../js/controller/ui/main/ui.main');
+  appLocation.setDefine('appLocation', 'SETTINGS');
+  require('../../../js/controller/ui/main/ui.setting');
+</script>
+
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    var c = $('input#cpu').val();
+    var r = $('input#ram').val();
+    var d = $('input#disk').val();
+
+    $('.gauge#cpu1 span').css({'width':c + '%'});
+    $('.gauge#ram1 span').css({'width':r + '%'});
+    $('.gauge#disk1 span').css({'width':d + '%'});
+
+    $('button#meter_cpu').css({'left':'calc(' + c + '% - 25px)'});
+    $('button#meter_ram').css({'left':'calc(' + r + '% - 25px)'});
+    $('button#meter_disk').css({'left':'calc(' + d + '% - 25px)'});
+
+    $('button#meter_cpu').text(c + '%');
+    $('button#meter_ram').text( r + '%');
+    $('button#meter_disk').text(d + '%');
+
+    $('input.resource_ctrl').on('change', function(){
+      //if value is different from prior value
+      $('button#apply_set_change').removeAttr('disabled');
+    })
+  })
+  var x, w, left, down, newVal;
+  down = false;
+  $(".meter").mouseenter(function(){
+    w = $(this).width();
+    left=$(this).children('input[name="resource_ctrl"]').val();
+    var ww = $(this).children('.gauge').children('span').width();
+  })
+  $(".meter").mousedown(function(e){
+    down = true;
+  });
+  $(".meter").mousemove(function(e){
+    e.preventDefault();
+    if(down == false) return;
+    var offset = $(this).parent().offset();
+    x=e.pageX - offset.left - 188;
+    newVal = Math.floor((x/w)*100);
+    if(newVal < 0){
+      newVal = 0;
+    }else if (newVal > 100) {
+      newVal = 100;
+    }else {
+      newVal = newVal;
+    }
+    $(this).children('input[name="resource_ctrl"]').val(newVal).change();
+  });
+  $(".meter").mouseup(function(e){
+    down = false;
+  });
+  $('input[name="resource_ctrl"]').on('change', function(){
+    var t = $(this).attr('id');
+    var val = $(this).val() + '%';
+    $('.gauge#' + t + '1').children('span').css({'width':val});
+    $('button#meter_' + t).text(val);
+    $('button#meter_' + t).css({'left':'calc(' + $(this).val() + '% - 25px)'});
+  })
+</script>
+</body>
+</html>

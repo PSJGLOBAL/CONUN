@@ -1,0 +1,87 @@
+{
+  "name": "conun_manager",
+  "version": "0.1.2",
+  "description": "Worldwide Distributed Supercomputing",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "rebuild": "electron-rebuild -f -w sqlite3",
+    "watch": "nodemon --exec 'electron .'",
+    "reset": "git reset --hard",
+    "build": "electron-builder -w",
+    "postinstall": "electron-builder install-app-deps",
+    "win-cert": "electron-builder create-self-signed-cert -p conun.io.certificate",
+    "release": "electron-builder -w -p 'onTagOrDraft'"
+  },
+  "repository": "https://github.com/CONUN-Global/CONUN",
+  "author": {
+    "name": "CONUN GLOBAL",
+    "email": "jamshid@conun.co.kr"
+  },
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "electron": "^7.3.2",
+    "electron-builder": "^22.7.0",
+    "electron-rebuild": "^1.11.0",
+    "nodemon": "^1.18.9"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "conun-ipc": "file:src/modules/ipc-dispatcher",
+    "conun-p2p": "file:src/modules/conun-p2p",
+    "crypto-js": "^3.1.9-1",
+    "electron-is-dev": "^1.0.1",
+    "electron-log": "^3.0.5",
+    "electron-redux": "^1.5.3",
+    "electron-store": "^5.2.0",
+    "electron-unhandled": "^2.1.0",
+    "electron-updater": "^4.2.5",
+    "electron-window-state": "^5.0.3",
+    "ethereumjs-tx": "^2.1.2",
+    "express": "^4.17.1",
+    "file-saver": "^2.0.2",
+    "joi": "^14.3.1",
+    "json-stringify-safe": "^5.0.1",
+    "jspdf": "^1.5.3",
+    "make-dir": "^3.1.0",
+    "moment": "^2.27.0",
+    "redux": "^3.7.2",
+    "request": "latest",
+    "sequelize": "^5.21.7",
+    "shelljs": "^0.8.4",
+    "sqlite3": "^4.2.0",
+    "web3": "^1.2.9",
+    "websocket": "^1.0.31",
+    "ws": "^7.3.1",
+    "xmlhttprequest": "^1.8.0"
+  },
+  "build": {
+    "appId": "com.conun.manager",
+    "productName": "Conun Manager",
+    "copyright": "Copyright 2020 by CONUN GROUP",
+    "publish": {
+      "provider": "github"
+    },
+    "mac": {
+      "category": "public.app-category.productivity"
+    },
+    "win": {
+      "certificateFile": "private/conun.io.certificate.p12",
+      "certificatePassword": "",
+      "verifyUpdateCodeSignature": "false",
+      "publisherName": "conun.io.certificate",
+      "artifactName": "CONUN installation alpha-ver-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": false,
+      "createDesktopShortcut": true,
+      "deleteAppDataOnUninstall": true,
+      "include": "build/installer.nsh"
+    },
+    "linux": {
+      "category": "Utility"
+    }
+  }
+}

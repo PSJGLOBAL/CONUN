@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+    <meta charset="utf-8" name="viewport" content="width=device-width, height=device-height, user-scalable=yes">
+    <!-- css & js -->
+    <link rel="stylesheet" href="../../css/common.css"/>
+    <!-- <link rel="stylesheet" href="../../css/media.css"/> -->
+<!--    <script src="../../js/jquery-3.4.1.min.js"></script>-->
+    <!-- title -->
+    <title>CONUN Manager</title>
+  </head>
+  <body>
+    <section id="popup" class="import">
+      <article class="area" style="grid-area:top;">
+        <p class="title">Import<br>Wallet</p>
+      </article>
+      <article class="area" style="grid-area:bottom;">
+        <div id="step1">
+          <p>
+            <b>Step 1</b>
+            Choose wallet option
+          </p>
+          <form>
+            <a href="../../page/chrome/metaporting.html" target="_blank">
+              <button type="button" name="metamask" class="large">
+                <img src="../../img/icon/ico_metamask.svg" alt="metamask" title="metamask">
+                Metamask
+              </button>
+            </a>
+            <button type="button" name="keystore" class="large">
+              <img src="../../img/icon/ico_upload.svg" alt="keystore" title="keystore">
+              KeyStoreFile.json
+            </button>
+            <button type="button" name="privkey" class="large">
+              <img src="../../img/icon/ico_key.svg" alt="privatekey" title="privkey">
+              Private Key
+            </button>
+          </form>
+        </div>
+        <div id="step2">
+          <p>
+            <b>Step 2</b>
+            <span class="keystore">Import with KeyStoreFile</span>
+            <span class="privkey">Access with Wallet Private Key</span>
+            <span class="metamask">Import MetaMask Wallet</span>
+          </p>
+          <form method="post" id="import_keystore" class="keystore">
+            <div class="wrap">
+              <input class="default large" type="file" name="userfile" id="userfile">
+            </div>
+            <div class="wrap">
+              <input class="int_wallet_password default" type="password" name="walletpw" id="walletpw" placeholder="Enter Wallet Password" required>
+              <label for="walletpw">Wallet Password</label>
+            </div>
+            <div class="wrap">
+              <button type="button" name="importWallet" class="btn_wallet_password form full fill">Import Wallet</button>
+            </div>
+          </form>
+          <form method="post" id="import_privkey" class="privkey">
+            <div class="wrap">
+              <input class="int_wallet_pk default" type="password" name="walletkey" id="walletkey" placeholder="Enter Wallet Private Key" required>
+              <label for="walletkey">Private Key</label>
+            </div>
+            <div class="wrap">
+              <button type="button" name="importWallet" class="btn_access_wallet form full fill">Access Wallet</button>
+            </div>
+          </form>
+          <form class="metamask">
+            <p>Redirect to MetaMask Integration Page...</p>
+          </form>
+          <a class="page_control snap">
+            <span><img src="../../img/icon/ico_arr_l.svg" alt="back" title="back"></span>
+            Change wallet option
+          </a>
+        </div>
+      </article>
+    </section>
+    <script src="../../vendor/js/jquery-3.4.1.min.js"></script>
+    <script type="application/javascript">
+      if (typeof module === 'object' && typeof module.exports !== 'undefined') {
+        window.$ = window.jQuery = module.exports;
+      }
+    </script>
+    <script type="text/javascript" src="../../vendor/js/common.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        var h = $(window).height();
+        $('section#popup').css({'height':h});
+      });
+      $('button.large').on('click', function(){
+        $('button.large, #step1>p').hide();
+        $(this).css({'display':'block'});
+        $(this).prop('disabled', true);
+        $('#step2').css({'display':'block'});
+        $('.keystore, .privkey, .metamask').hide();
+        var $option = $(this).attr('name');
+        $('.' + $option).css({'display':'block'});
+      })
+      $('#step2 a').on('click', function(){
+        $('button.large, #step1>p').css({'display':'block'});
+        $('button.large').prop('disabled', false);
+        $('#step2').hide();
+        $('.keystore, .privkey, .metamask').hide();
+      })
+    </script>
+    <script>
+      require('../../../js/controller/ui/wallet/ui.manage.import.key');
+      require('../../../js/controller/ui/wallet/ui.manage.import.pk');
+    </script>
+  </body>
+</html>

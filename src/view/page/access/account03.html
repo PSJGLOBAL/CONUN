@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+    <meta charset="utf-8" name="viewport" content="width=device-width, height=device-height, user-scalable=yes">
+    <!-- css & js -->
+    <link rel="stylesheet" href="../../css/common.css"/>
+    <!-- <link rel="stylesheet" href="../css/media.css"/> -->
+<!--    <script src="../../vendor/js/jquery-3.4.1.min.js"></script>-->
+    <!-- title -->
+    <title>CONUN Manager | Access Wallet</title>
+  </head>
+  <body>
+    <section id="access" page="account03">
+      <nav style="grid-area: nav;">
+        <a href="#"><img src="../../img/main_logo.svg" alt="CONUN DSC Logo" title="CONUN DSC Logo"></a>
+      </nav>
+      <p class="title mid" style="grid-area: page;">Access Account</p>
+      <div style="grid-area: blank-l;"></div>
+      <div style="grid-area: blank-r;"></div>
+      <section style="grid-area: form;" area="form">
+        <p class="title">Import With QR Code</p>
+        <p class="paragraph gray">
+          Upload QR Code Image file of your account or enter Node UID.
+          <!-- QR Code Image file should be .jpg or .png.<br> -->
+          <!-- Wallet private key is optional. -->
+        </p>
+        <form action="../access/wallet03.html" method="post">
+          <div class="wrap">
+            <input class="default large" type="file" name="userqr" id="userqr">
+          </div>
+          <div class="wrap" style="margin-top:30px;">
+            <input class="default" type="text" name="nodeuid" id="nodeuid" placeholder="Enter your Node UID" required>
+            <label for="walletpw02">Node UID</label>
+          </div>
+          <div class="wrap">
+            <input class="default" type="text" name="walletkey" id="walletkey" placeholder="Enter your Wallet Private key to import wallet too.">
+            <label for="walletpw02">Wallet Private Key (Optional)</label>
+          </div>
+          <div class="wrap flex">
+            <button type="button" name="back" class="form half" onclick="location.href='../access/intro.html'">Back</button>
+            <button type="submit" name="import" class="form half fill">Import Account</button>
+          </div>
+        </form>
+      </section>
+    </section>
+    <footer class="flex">
+      <span>Version 0.0.1</span>
+      <div>
+        <a href="http://conun.io" target="_blank">
+          <img src="../../img/icon/ico_world.svg" alt="conun homepage" title="conun homepage">
+          Home
+        </a>
+        <a href="https://t.me/joinchat/BEd-ABhvx-GK9_G3fxnYvg" target="_blank">
+          <img src="../../img/icon/ico_telegram.svg" alt="conun telegram" title="conun telegram">
+          Telegram
+        </a>
+      </div>
+    </footer>
+    <script src="../../vendor/js/jquery-3.4.1.min.js"></script>
+    <script type="application/javascript">
+      if (typeof module === 'object' && typeof module.exports !== 'undefined') {
+        window.$ = window.jQuery = module.exports;
+      }
+    </script>
+  </body>
+</html>

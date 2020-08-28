@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="17" viewBox="0 0 56 17">
+  <g id="ico_done_c" transform="translate(-255.5 -189.5)">
+    <text id="DONE" transform="translate(265 202.5)" fill="#3bee7d" font-size="13" font-family="IBMPlexSans-SemiBold, IBM Plex Sans" font-weight="600" letter-spacing="0.05em"><tspan x="0" y="0">DONE</tspan></text>
+    <path id="패스_1195" data-name="패스 1195" d="M257.943,196l-2,2,2,2" transform="translate(0.057)" fill="none" stroke="#3bee7d" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    <path id="패스_1198" data-name="패스 1198" d="M257.943,196l-2,2,2,2" transform="translate(566.943 396) rotate(180)" fill="none" stroke="#3bee7d" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    <path id="패스_1196" data-name="패스 1196" d="M257.943,196l-2,2,2,2" transform="translate(3.057)" fill="none" stroke="#3bee7d" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    <path id="패스_1197" data-name="패스 1197" d="M257.943,196l-2,2,2,2" transform="translate(563.943 396) rotate(180)" fill="none" stroke="#3bee7d" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+  </g>
+</svg>

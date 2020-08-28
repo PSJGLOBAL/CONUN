@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+    <meta charset="utf-8" name="viewport" content="width=device-width, height=device-height, user-scalable=yes">
+    <!-- css & js -->
+    <link rel="stylesheet" href="../../css/common.css"/>
+    <!-- <link rel="stylesheet" href="../../css/media.css"/> -->
+<!--    <script src="../../js/jquery-3.4.1.min.js"></script>-->
+    <!-- title -->
+    <title>CONUN Manager</title>
+  </head>
+  <body style="user-focus:none; -webkit-app-region: drag; padding-top:150px;">
+    <section id="popup" class="download">
+      <article class="area" style="grid-area:left;">
+        <p class="title">Transaction<br>Sending</p>
+      </article>
+      <article class="area" style="grid-area:content;">
+        <ul class="download_list">
+          <li>
+            <span>Task ID</span>
+            <p id="txt_task_id"></p>
+          </li>
+          <li>
+            <span>To Address</span>
+            <p id="txt_to_address"></p>
+          </li>
+          <li>
+            <span>Send Amount</span>
+            <p id="txt_send_amount"></p>
+          </li>
+          <li>
+            <span>Tx Hash</span>
+            <p id="txt_transaction_fee"></p>
+          </li>
+          <li>
+              <a id="btn_etherscan"> <span style="color: #6ba9ca; ">Click here to check transaction in ether scan</span></a>
+          </li>
+          <li>
+            <button id="btn_ok" type="button" class="form fill" name="button" style="width:100%;">OK</button>
+          </li>
+        </ul>
+      </article>
+      <article class="anim_bg">
+        <div class="elem" id="elem_trans">
+          <img src="../../img/elem_trans_01.svg">
+          <img src="../../img/elem_trans_02.svg">
+          <div></div>
+        </div>
+      </article>
+    </section>
+    <script src="../../vendor/js/jquery-3.4.1.min.js"></script>
+    <script type="application/javascript">
+      if (typeof module === 'object' && typeof module.exports !== 'undefined') {
+        window.$ = window.jQuery = module.exports;
+      }
+    </script>
+    <script type="text/javascript" src="../../vendor/js/common.js"></script>
+  <script>
+    require('../../../js/controller/ui/popup/ui.up.transaction')
+  </script>
+  </body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+    <meta charset="utf-8" name="viewport" content="width=device-width, height=device-height, user-scalable=yes">
+    <!-- css & js -->
+    <link rel="stylesheet" href="../../css/common.css"/>
+    <!-- <link rel="stylesheet" href="../../css/media.css"/> -->
+<!--    <script src="../../js/jquery-3.4.1.min.js"></script>-->
+    <!-- title -->
+    <title>CONUN Manager</title>
+  </head>
+  <body>
+    <section id="default">
+      <!-- left menu -->
+      <nav style="grid-area: nav;">
+        <a href="../home.html"><img src="../../img/main_logo.svg" alt="CONUN DSC Logo" title="CONUN DSC Logo"></a>
+        <ul class="menu" id="menu">
+          <li><p><a href="../home.html"><img src="../../img/icon/ico_home.svg" alt="home" title="home">Home</a></p></li>
+          <li class="d">
+            <p><img src="../../img/icon/ico_conun.svg" alt="CONUN" title="CONUN">CONUN</p>
+            <ul class="menu">
+              <li><p><a href="../../page/conun/requester.html"><img src="../../img/icon/ico_req.svg" alt="Requester" title="Requester">Requester</a></p></li>
+              <li><p><a href="../../page/conun/provider.html"><img src="../../img/icon/ico_prov.svg" alt="Provider" title="Provider">Provider</a></p></li>
+              <!-- <li><img src="../../img/icon/ico_logs.svg" alt="Logs" title="Logs">Logs</li> -->
+            </ul>
+          </li>
+          <li class="d on">
+            <p><img src="../../img/icon/ico_wallet.svg" alt="Wallet" title="Wallet">Wallet</p>
+            <ul class="menu">
+              <li><p><a href="transaction.html"><img src="../../img/icon/ico_trans.svg" alt="Transaction" title="Transaction">Transaction</a></p></li>
+              <li class="on"><p><img src="../../img/icon/ico_wallet_manage.svg" alt="Manage" title="Manage">Manage</p></li>
+<!--              <li><p><img src="../../img/icon/ico_history.svg" alt="History" title="History">History</p></li>-->
+            </ul>
+          </li>
+          <li><p><a href="../setting/setting.html"><img src="../../img/icon/ico_setting.svg" alt="Setting" title="Setting">Setting</a></p></li>
+        </ul>
+        <ul id="menu_etc">
+          <li><a href="http://conun.io" target="_blank"><img src="../../img/icon/ico_globe.svg" alt="website" title="website" style="vertical-align:middle;"> conun.io</a></li>
+          <li>Version 0.1</li>
+        </ul>
+      </nav>
+      <!-- contents area -->
+      <section class="grid sub wallet" style="grid-area: content;">
+        <article class="area narrow" style="grid-area: status;" area="status">
+          <p><img src="../../img/icon/ico_network.svg" alt="network" title="network"> Network Status<span id="txt_network_status"></span></p>
+          <p>Workable Nodes<span id="txt_node_count"></span></p>
+          <button type="button" name="minimize" class="clear">
+            Minimize <img src="../../img/icon/ico_mini.svg" alt="minimize" title="minimize">
+          </button>
+        </article>
+        <article class="area flex" style="grid-area: address;" area="address">
+          <section>
+            <p>Address</p>
+            <input type="text" readonly id="userwallet">
+            <button type="button" name="qr_min" class="button1 clear" onclick="windowOpen('../popup/export_qr.html', 400, 650)"></button>
+            <button type="button" name="print" class="button2 clear" onclick="copytoClip('userwallet');"></button>
+            <button type="button" name="copy" class="button3 clear" onclick="copytoClip('userwallet');"></button>
+          </section>
+          <div class="h-bar-dark"></div>
+          <section>
+            <p>CON Balance</p>
+            <input type="text" readonly id="txt_con_balance">
+            <button type="button" name="refresh" class="button1 clear"></button>
+          </section>
+        </article>
+
+        <article class="area" style="grid-area: send;" area="send">
+          <section class="layout">
+          <p class="title">Wallet management</p>
+            <form id="manage" class="flex_flow">
+              <div class="wrap">
+                <button id="btn_import_wallet" type="button" name="slow" class="large sub half">
+                  <img src="../../img/icon/ico_import.svg" alt="import" title="import"><span>Import Wallet</span>
+                </button>
+                <button id="btn_export_qr_code" type="button" name="average" class="large sub half">
+                  <img src="../../img/icon/ico_export.svg" alt="export" title="export" ><span>Export Wallet</span>
+                </button>
+              </div>
+              <div class="wrap">
+                <select class="sub" name="user_wallets" id="user_wallets">
+                  <option value="0x1"id="txt_wallet_1"></option>
+<!--                  <option value="0x2" selected>wallet addr 2</option>-->
+<!--                  <option value="0x3">wallet addr 3</option>-->
+                </select>
+                <!-- <input class="sub" type="text" name="to_addr" id="to_addr" placeholder="0x1023x0xx5x55b5bbb64b8" required> -->
+                <label for="user_wallets">Current Active Address</label>
+              </div>
+                <div class="wrap">
+                <button type="button" name="cancel" class="form mid cancle"><a href="../home.html"></a>Cancel</button>
+                <button id="btn_apply_wallet" type="button" name="apply" class="form fill apply">Apply</button>
+              </div>
+            </form>
+        </section>
+        </article>
+      </section>
+    </section>
+    <script src="../../vendor/js/jquery-3.4.1.min.js"></script>
+    <script type="application/javascript">
+      if (typeof module === 'object' && typeof module.exports !== 'undefined') {
+        window.$ = window.jQuery = module.exports;
+      }
+    </script>
+    <script type="text/javascript" src="../../vendor/js/common.js"></script>
+    <script>
+      const {appLocation} = require('../../../js/controller/ui/main/ui.main');
+      appLocation.setDefine('appLocation', 'WALLET_MANAGEMENT');
+      require('../../../js/controller/ui/main/ui.wallet.management');
+    </script>
+
+  </body>
+</html>

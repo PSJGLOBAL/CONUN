@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+    <meta charset="utf-8" name="viewport" content="width=device-width, height=device-height, user-scalable=yes">
+    <!-- css & js -->
+    <link rel="stylesheet" href="../../css/common.css"/>
+    <!-- <link rel="stylesheet" href="../../css/media.css"/> -->
+    <!-- title -->
+    <title>CONUN Manager</title>
+<!--    <script src="http://code.jquery.com/jquery-latest.js"></script>-->
+
+  </head>
+  <body>
+    <section id="default">
+      <!-- left menu -->
+      <nav style="grid-area: nav;">
+        <a href="../home.html"><img src="../../img/main_logo.svg" alt="CONUN DSC Logo" title="CONUN DSC Logo"></a>
+        <ul class="menu" id="menu">
+          <li><p><a href="../home.html"><img src="../../img/icon/ico_home.svg" alt="home" title="home">Home</a></p></li>
+          <li class="d">
+            <p><img src="../../img/icon/ico_conun.svg" alt="CONUN" title="CONUN">CONUN</p>
+            <ul class="menu">
+              <li><p><a href="../../page/conun/requester.html"><img src="../../img/icon/ico_req.svg" alt="Requester" title="Requester">Requester</a></p></li>
+              <li><p><a href="../../page/conun/provider.html"><img src="../../img/icon/ico_prov.svg" alt="Provider" title="Provider">Provider</a></p></li>
+              <!-- <li><img src="../../img/icon/ico_logs.svg" alt="Logs" title="Logs">Logs</li> -->
+            </ul>
+          </li>
+          <li class="d on">
+            <p><img src="../../img/icon/ico_wallet.svg" alt="Wallet" title="Wallet">Wallet</p>
+            <ul class="menu">
+              <li class="on"><p><img src="../../img/icon/ico_trans.svg" alt="Requester" title="Requester">Transaction</p></li>
+              <li><p><a href="management.html"><img src="../../img/icon/ico_wallet_manage.svg" alt="Logs" title="Logs">Manage</a></p></li>
+<!--              <li><p><img src="../../img/icon/ico_history.svg" alt="Provider" title="Provider">History</p></li>-->
+            </ul>
+          </li>
+          <li><p><a href="../setting/setting.html"><img src="../../img/icon/ico_setting.svg" alt="Setting" title="Setting">Setting</a></p></li>
+        </ul>
+        <ul id="menu_etc">
+          <li><a href="http://conun.io" target="_blank"><img src="../../img/icon/ico_globe.svg" alt="website" title="website" style="vertical-align:middle;"> conun.io</a></li>
+          <li>Version 0.1</li>
+        </ul>
+      </nav>
+      <!-- contents area -->
+      <section class="grid sub wallet" style="grid-area: content;">
+        <article class="area narrow" style="grid-area: status;" area="status">
+          <p><img src="../../img/icon/ico_network.svg" alt="network" title="network"> Network Status<span id="txt_network_status"></span></p>
+          <p>Workable Nodes<span id="txt_node_count"></span></p>
+          <button type="button" name="minimize" class="clear">
+            Minimize <img src="../../img/icon/ico_mini.svg" alt="minimize" title="minimize">
+          </button>
+        </article>
+        <article class="area flex" style="grid-area: address;" area="address">
+          <section>
+            <p>Active Wallet</p>
+            <input type="text" readonly id="userwallet">
+            <button type="button" name="qr_min" class="button1 clear" onclick="windowOpen('../popup/export_qr.html', 400, 650)"></button>
+            <button type="button" name="print" class="button2 clear" onclick="copytoClip('userwallet');"></button>
+            <button type="button" name="copy" class="button3 clear" onclick="copytoClip('userwallet');"></button>
+          </section>
+          <div class="h-bar-dark"></div>
+          <section>
+            <p>My Balance</p>
+<!--            <p id="text_balance"></p>-->
+            <input type="text" readonly id="text_balance">
+            <button type="button" name="refresh" class="button1 clear" id="btn_refreshBalance"></button>
+          </section>
+        </article>
+
+        <article class="area" style="grid-area: send;" area="send">
+          <section class="layout">
+          <p class="title">Send transaction</p>
+          <div class="send-scroll">
+            <form id="transaction" class="flex_flow">
+              <div class="wrap half">
+                <select class="sub" name="to_type" id="to_type">
+                  <option value="coin_eth">ETH</option>
+                  <option value="coin_con">CON</option>
+                </select>
+                <label for="to_type">Type</label>
+              </div>
+              <div class="wrap half">
+                <input class="sub" type="text" name="tr_amount" id="tr_amount" placeholder="0.0" required>
+                <label for="tr_amount">Transaction amount</label>
+              </div>
+              <div class="wrap">
+                <input class="sub" type="text" name="to_addr" id="to_addr" placeholder="0x123..." required>
+                <label for="to_addr">To Address</label>
+              </div>
+              <!--Advanced View-->
+              <div class="wrap">
+                <button id="btn_slow_transaction" value="slow" type="button" name="slow" class="fee sub form">
+                  <span class="big_txt">Slow</span><br>
+                  <span id="slow_transaction" class="sm_txt">0.00059 ETH</span>
+                </button>
+                <button id="btn_average_transaction" value="average" type="button" name="average" class="fee sub form">
+                  <span class="big_txt">Average</span><br>
+                  <span id="average_transaction" class="sm_txt">0.00069 ETH</span>
+                </button>
+                <button id="btn_fast_transaction" value="fast" type="button" name="fast" class="fee sub form">
+                  <span class="big_txt">Fast</span><br>
+                  <span id="fast_transaction" class="sm_txt">0.00073 ETH</span>
+                </button>
+                <button type="button" id="button1" onclick="slide_button(this)" value="advanced" class="btn_advanced_transaction view sub">
+                  <a id="button_value">+ Advanced View</a>
+                </button>
+                <label>Transaction Fee</label>
+              </div>
+              <div id="adv" class="gas" style="display : none;">
+                <div class="sm_half-left">
+                  <div class="wrap">
+                    <input id="txt_gas_price" type="number" name="advanced" class="view sub" placeholder="36">
+                    <label>Gas Price</label>
+                  </div>
+                  <div class="wrap">
+                    <input id="txt_gas_limit" type="number" name="advanced" class="view sub" placeholder="21000">
+                    <label>Gas Limit</label>
+                  </div>
+                </div>
+                <div class="sm_half-right">
+                  <div class="wrap">
+                    <div class="price_wrap"><div class="count">Send Amount</div> <div class="price"><span id="send_amt">0.0</span>&nbsp;<span id="send_type">ETH</span></div></div>
+                    <div class="price_wrap"><div class="count">Transaction Fee</div> <div class="price" id="txt_transaction_fee">0.0ETH</div></div>
+                    <div class="price_wrap"><div class="to_count">Total</div> <div class="to_price" id="txt_total">0.0ETH</div></div>
+                  </div>
+                </div>
+              </div>
+              <button type="button" name="import" class="form fill" id="btn_send_transaction">Send Transaction</button>
+            </form>
+          </div>
+        </section>
+        </article>
+      </section>
+    </section>
+    <script src="../../vendor/js/jquery-3.4.1.min.js"></script>
+    <script type="application/javascript">
+      if (typeof module === 'object' && typeof module.exports !== 'undefined') {
+        window.$ = window.jQuery = module.exports;
+      }
+    </script>
+    <script src="../../vendor/js/common.js"></script>
+    <script>
+      const {appLocation}= require('../../../js/controller/ui/main/ui.main');
+      appLocation.setDefine('appLocation', 'WALLET_TRANSACTION');
+      require('../../../js/controller/ui/main/ui.wallet.transaction');
+    </script>
+
+    <script type="text/javascript">
+      $('select#to_type').on('change', function(){
+        var str = $("#to_type").val();
+        if(str === 'coin_con') {
+          $("#send_type").text("CON");
+        }
+        else if(str === 'coin_eth') {
+          $("#send_type").text("ETH");
+        }
+      });
+    </script>
+    <script>
+      $(document).ready(function(){ //문서가 준비되면 == 로딩이 다 되면
+        slide_state = true; //전역변수 state 의 값을 true로 설정
+        // 스위치 처럼 껏다 키는 용도의 변수
+      });
+
+      function slide_button(){ //버튼 클릭시
+        //console.log($("#button_img").context.button_img); // 이미지 주소값 콘솔출력인데 표시하려면 앞에 // 지우면됨
+        //var img_src = $("#button_img").context.button_img;   // 이미지객체를 img_src 객체로 대입
+
+
+        if(slide_state === true){ //변수 state 의 값 이 true면
+
+          $("#adv").slideDown(300,function(){    //div 슬라이드 내림
+
+            //img_src.src = "../../img/icon/ico_minus_mini.svg"; //버튼안 이미지 주소값 변경
+            document.getElementById('button_value').innerHTML ="- Advanced Resize";
+          });
+        }else  if(slide_state === false){ // 변수 state 의 값이 false면
+          $("#adv").slideUp(300,function(){ //div 슬라이드 올림
+            //img_src.src = "../../img/icon/ico_plus_mini.svg"; //버튼안 이미지 주소값 변경
+            document.getElementById('button_value').innerHTML ="+ Advanced View";
+          });
+        }
+        slide_state = !slide_state; // 참 거짓 전환 참이었으면 거짓으로 거짓이었으면 침으로 스위치 변경한다고 생각하면됨.
+        //console.log(state);
+      }
+    </script>
+  </body>
+</html>

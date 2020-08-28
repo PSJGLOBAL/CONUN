@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="16" viewBox="0 0 40 16">
+  <g id="ico_done_b" transform="translate(-256 -190)">
+    <g id="사각형_87" data-name="사각형 87" transform="translate(256 190)" fill="none" stroke="#3bee7d" stroke-width="1">
+      <rect width="40" height="16" rx="3" stroke="none"/>
+      <rect x="0.5" y="0.5" width="39" height="15" rx="2.5" fill="none"/>
+    </g>
+    <text id="DONE" transform="translate(276 201.5)" fill="#3bee7d" font-size="10" font-family="IBMPlexSans, IBM Plex Sans" letter-spacing="0.05em"><tspan x="-14.095" y="0">DONE</tspan></text>
+  </g>
+</svg>

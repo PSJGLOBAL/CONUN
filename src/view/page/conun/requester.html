@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+    <meta charset="utf-8" name="viewport" content="width=device-width, height=device-height, user-scalable=yes">
+    <!-- css & js -->
+    <link rel="stylesheet" href="../../css/common.css"/>
+    <!-- <link rel="stylesheet" href="../../css/media.css"/> -->
+    <!-- title -->
+    <title>CONUN Manager</title>
+  </head>
+  <body>
+    <section id="default">
+      <!-- left menu -->
+      <nav style="grid-area: nav;">
+        <a href="#"><img src="../../img/main_logo.svg" alt="CONUN DSC Logo" title="CONUN DSC Logo"></a>
+        <ul class="menu" id="menu">
+          <li><p><a href="../home.html"><img src="../../img/icon/ico_home.svg" alt="home" title="home">Home</a></p></li>
+          <li class="d on">
+            <p><img src="../../img/icon/ico_conun.svg" alt="CONUN" title="CONUN">CONUN</p>
+            <ul class="menu">
+              <li class="on"><p><img src="../../img/icon/ico_req.svg" alt="Requester" title="Requester">Requester</p></li>
+              <li><p><a href="../conun/provider.html"><img src="../../img/icon/ico_prov.svg" alt="Provider" title="Provider">Provider</a></p></li>
+              <!-- <li><img src="../../img/icon/ico_logs.svg" alt="Logs" title="Logs">Logs</li> -->
+            </ul>
+          </li>
+          <li class="d">
+            <p><img src="../../img/icon/ico_wallet.svg" alt="Wallet" title="Wallet">Wallet</p>
+            <ul class="menu">
+              <li><p><a href="../wallet/transaction.html"><img src="../../img/icon/ico_trans.svg" alt="Transaction" title="Transaction">Transaction</a></p></li>
+              <li><p><a href="../wallet/management.html"><img src="../../img/icon/ico_wallet_manage.svg" alt="Manage" title="Manage">Manage</a></p></li>
+<!--              <li><p><img src="../../img/icon/ico_history.svg" alt="History" title="History">History</p></li>-->
+            </ul>
+          </li>
+          <li><p><a href="../setting/setting.html"><img src="../../img/icon/ico_setting.svg" alt="Setting" title="Setting">Setting</a></p></li>
+        </ul>
+        <ul id="menu_etc">
+          <li><a href="http://conun.io" target="_blank"><img src="../../img/icon/ico_globe.svg" alt="website" title="website" style="vertical-align:middle;"> conun.io</a></li>
+          <li>Version 0.1</li>
+        </ul>
+      </nav>
+      <!-- contents -->
+      <!--
+        if there isn't any requested task, add Class "notask" to <section> below.
+        section class="grid sub conun req notask" TODO check here
+      -->
+      <section class="id_class_change grid sub conun req" style="grid-area: content;"> <!-- TODO logic class="grid sub conun req notask" -->
+        <article class="area narrow" style="grid-area: status;" area="status">
+          <p><img src="../../img/icon/ico_network.svg" alt="network" title="network"> Network Status<span id="txt_network_status"></span></p>
+          <p>Workable Nodes<span id="txt_node_count"></span></p>
+          <button type="button" name="minimize" class="clear">
+            Minimize <img src="../../img/icon/ico_mini.svg" alt="minimize" title="minimize">
+          </button>
+        </article>
+        <!-- 내용은 이 아래 영역 안에 -->
+        <article id="drop_zone" class="area" style="grid-area: pagetitle;" area="pagetitle">
+          <p class="title">Requested Tasks</p>
+          <button type="button" name="addproject" class="btn_addProject mid"><img src="../../img/icon/ico_add_folder_14.svg" alt="file" title="add project">Add Project</button>
+          <input type="file" multiple="multiple" name="proj_path_[]" id="proj_path_file">
+        </article>
+        <!--
+          if there isn't any requested task.
+
+          !!
+          you don't have to delete this section, since it's handeled by
+          'class' of mother element <section> (line 47).
+        -->
+          <article class="area" style="grid-area:notask;" area="notask">
+            <div class="wrap flex">
+              <button type="button" name="nodata" class="_btn_addProject clear"><img src="../../img/icon/ico_add_folder_gray.svg">&nbsp;Add Project</button>
+            </div>
+          </article>
+        <!-- . -->
+        <!-- if requested tasks are more than 1 -->
+        <article class="select_project_area area" style="grid-area: reqlist;" area="reqlist">
+          <div class="list_project_group wrap">
+            <!--
+              list item group is consisted with <input> and <label>.
+
+              no page change, only display changes.
+              !! place project id without hash to input "id" and label "for".
+              !! these two values should match to work the input normally.
+            -->
+
+            <!-- TODO Project List start-->
+<!--            <input type="radio" name="reqlist" id="idhere" checked> &lt;!&ndash; CHECKED attribute is only for first item. &ndash;&gt;-->
+<!--            <label for="idhere" class="reqitem flex done"> &lt;!&ndash; if done disable cancel btn view &ndash;&gt;-->
+<!--              <span class="title mid"><img src="../../img/icon/ico_done_b.svg" alt="done project" id="txt_project_name"></span> &lt;!&ndash; Project Hash &ndash;&gt;-->
+<!--              <span id="txt_project_hash"></span> &lt;!&ndash; #Project Hash&ndash;&gt;-->
+<!--              <span id="txt_task_counts"></span> &lt;!&ndash; task count &ndash;&gt;-->
+<!--              <span class="gray" id="txt_date"></span> &lt;!&ndash; end time ~ 0000-00-00, 00:00:00 (+UTC) &ndash;&gt;-->
+<!--              <span class="reqitem_btn">-->
+<!--                <img src="../../img/icon/ico_etc.svg" alt="more" title="more">-->
+<!--                <span>-->
+<!--                  <button type="button" name="reqitem_btn_x" class="clear"><img src="../../img/icon/ico_cancel_10.svg" alt="cancel" title="cancel"> Cancel Project</button>-->
+<!--                  <button type="button" name="reqitem_btn_d" class="clear"><img src="../../img/icon/ico_trash.svg" alt="delete" title="delete"> Delete Project</button>-->
+<!--                  <button type="button" name="reqitem_btn_r" class="clear"><img src="../../img/icon/ico_resume.svg" alt="resume" title="resume"> Resume Project</button>-->
+<!--                </span>-->
+<!--              </span>-->
+<!--            </label>-->
+            <!-- Project Name end-->
+          </div>
+        </article>
+
+
+
+        <article class="select_task_area area" style="grid-area: reqdetail;" area="reqdetail">
+          <button id="btn_download_tasks" type="button" name="task_download" class="form full fill"><img src="../../img/icon/ico_download.svg" alt="download" title="download"> Download</button>
+          <div class="wrap">
+
+
+            <!-- selected project detail area -->
+            <div>
+              <p class="paragraph">Project<br>Task Results</p>
+              <input type="checkbox" name="reqdetail_sel_all" id="reqdetail_sel_all">
+              <label for="reqdetail_sel_all" class="checkbox"><span></span>&nbsp;Select All</label>
+              <button type="button" name="task_delete" class="clear" onclick="openPopup('yn', 'Are you sure to Delete selected tasks?', 300, 240, '', '')"><img src="../../img/icon/ico_trash.svg" alt="delete" title="delete"> Delete</button>
+            </div>
+            <!-- End title text -->
+
+            <div class="wrap">
+              <table cellpadding="0" cellspacing="0" class="clear narrow">
+                <tbody class="list_task_area">
+<!--                <div id="list_task_area">-->
+
+<!--                </div>-->
+                  <!-- TODO Task List group start -->
+<!--                  <tr class="">-->
+<!--                    <td rowspan="3"><input type="checkbox" name="reqdetail_sel" id="task_TASKIDHERE"><label class="checkbox" for="task_TASKIDHERE"><span></span></label></td>-->
+<!--                    <td rowspan="3" class="stat">Status</td>-->
+<!--                    <td class="head">Task ID</td><td title="task id value">task id value</td>-->
+<!--                  </tr>-->
+<!--                  <tr><td class="head">Hash</td><td>Hash value</td></tr>-->
+<!--                  <tr><td class="head prov">Provider</td><td class="prov" title="Click to Copy"><input type="readonly" onclick="copy(this);" value="Provider Wallet Here"></td></tr>-->
+                  <!-- task list group end -->
+
+
+                  <!--
+                    above group is for 1 task.
+                    put each value to the designated area.
+                    if one task ended, add class 'done' to the first <tr> of the group.
+                    to help understanding, check sample below.
+                  -->
+<!--                  <tr class="done">-->
+<!--                    <td rowspan="3"><input type="checkbox" name="reqdetail_sel" id="task_TASKIDHERE1"><label class="checkbox" for="task_TASKIDHERE1"><span></span></label></td>-->
+<!--                    <td rowspan="3" class="stat">Done</td>-->
+<!--                    <td class="head">Task ID</td><td title="task id value">task id value</td>-->
+<!--                  </tr>-->
+<!--                  <tr><td class="head">Hash</td><td>Hash value</td></tr>-->
+<!--                  <tr><td class="head prov">Provider</td><td class="prov" title="Click to Copy"><input type="readonly" onclick="copy(this);" value="Provider Wallet Here"></td></tr>-->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+      </section>
+    </section>
+    <script src="../../vendor/js/jquery-3.4.1.min.js"></script>
+    <script type="application/javascript">
+      if (typeof module === 'object' && typeof module.exports !== 'undefined') {
+        window.$ = window.jQuery = module.exports;
+      }
+    </script>
+    <script type="text/javascript" src="../../vendor/js/common.js"></script>
+    <script>
+      const {appLocation} = require('../../../js/controller/ui/main/ui.main');
+      appLocation.setDefine('appLocation', 'REQUESTER');
+      require('../../../js/controller/ui/main/ui.conun.requester');
+    </script>
+<!--     <script type="text/javascript">-->
+<!--      // input select all & select each-->
+<!--      $('input[name="reqdetail_sel"]').on('change',function(){-->
+<!--        $each = $('input[name="reqdetail_sel"]');-->
+<!--        $all = $('input#reqdetail_sel_all');-->
+<!--        var sel_cnt = $each.length;-->
+<!--        if($('input[name="reqdetail_sel"]:checked').length == sel_cnt){-->
+<!--          $all.prop('checked', true).change();-->
+<!--        }else {-->
+<!--          $all.prop('checked', false);-->
+<!--        }-->
+<!--        if($('input[name="reqdetail_sel"]:checked').length == 0){-->
+<!--          $('button[name="task_download"]').hide();-->
+<!--          $('button[name="task_delete"]').hide();-->
+<!--        }else {-->
+<!--          $('button[name="task_download"]').show();-->
+<!--          $('button[name="task_delete"]').show();-->
+<!--        }-->
+<!--      });-->
+<!--      $('input#reqdetail_sel_all').on('change',function(){-->
+<!--        $each = $('input[name="reqdetail_sel"]');-->
+<!--        var sel_cnt = $each.length;-->
+<!--        if($(this).is(':checked')){-->
+<!--          $each.prop('checked', true);-->
+<!--          $('button[name="task_download"]').show();-->
+<!--          $('button[name="task_delete"]').show();-->
+<!--        }else {-->
+<!--          $each.prop('checked', false).change();-->
+<!--          $('button[name="task_download"]').hide();-->
+<!--          $('button[name="task_delete"]').hide();-->
+<!--        }-->
+<!--      })-->
+<!--    </script>-->
+  </body>
+</html>

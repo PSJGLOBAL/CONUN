@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- meta -->
+  <meta charset="utf-8" name="viewport" content="width=device-width, height=device-height, user-scalable=yes">
+  <!-- css & js -->
+  <link rel="stylesheet" href="../../css/common.css"/>
+  <!-- <script src="jquery-3.4.1.min.js"></script> -->
+  <!-- <link rel="stylesheet" href="../../css/media.css"/> -->
+  <!-- title -->
+  <title>CONUN Manager</title>
+</head>
+<body id="body">
+<section id="popup" class="export">
+  <article class="area" style="grid-area:top;">
+    <!-- <div id="editor"></div> -->
+      <p class="title">Export<br>QR Codes</p>
+    <div class="wrap">
+      <button id="btnPdfSaver" type="button" name="export_qr" class="form full fill"><img src="../../img/icon/ico_print.svg" alt="print"></button>
+    </div>
+  </article>
+
+  <article class="area" style="grid-area:qrs;">
+
+    <div id="content" class="qrwrap wrap">
+      <div class="qr" id="conun_account"></div>
+      <div class="qr_ex">
+        <p class="paragraph">QR Code Backup Account</p>
+        <a href="https://www.dummies.com/business/marketing/social-media-marketing/how-to-scan-a-qr-code/">How to use Node UID?</a>
+      </div>
+    </div>
+
+    <!--
+            <div class="wrap">
+              <div class="qr" id="user_pub_key"></div>
+              <div class="qr_ex">
+                <p class="paragraph">Wallet Public Key</p>
+                <a href="#">How to import Public Key?</a>
+              </div>
+            </div>
+
+
+            <div class="wrap">
+              <div class="qr" id="user_priv_key"></div>
+              <div class="qr_ex">
+                <p class="paragraph">Wallet Private Key</p>
+                <a href="#">How to import Private Key?</a>
+              </div>
+            </div> -->
+
+  </article>
+
+</section>
+<script src="../../vendor/js/jquery-3.4.1.min.js"></script>
+<script src="../../vendor/js/qrcode.min.js"></script>
+<script type="application/javascript">
+  if (typeof module === 'object' && typeof module.exports !== 'undefined') {
+    window.$ = window.jQuery = module.exports;
+  }
+</script>
+<script src="../../vendor/js/common.js"></script>
+<script src="../../vendor/js/qr.code.maker.js"></script>
+<script src="../../vendor/js/util.main.js"></script>
+<!-- <script>
+  require('../../../js/utils/util.main')
+</script> -->
+</body>
+</html>

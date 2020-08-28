@@ -1,0 +1,5 @@
+<svg id="ico_etc" xmlns="http://www.w3.org/2000/svg" width="2" height="12" viewBox="0 0 2 12">
+  <circle id="타원_25" data-name="타원 25" cx="1" cy="1" r="1" fill="#fff"/>
+  <circle id="타원_26" data-name="타원 26" cx="1" cy="1" r="1" transform="translate(0 5)" fill="#fff"/>
+  <circle id="타원_27" data-name="타원 27" cx="1" cy="1" r="1" transform="translate(0 10)" fill="#fff"/>
+</svg>

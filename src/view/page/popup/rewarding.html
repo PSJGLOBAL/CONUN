@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, height=device-height, user-scalable=yes">
+    <!-- css & js -->
+    <link rel="stylesheet" href="../../css/common.css"/>
+    <title>CONUN Manager</title>
+</head>
+<body>
+    <section class="grid sub conun prov" style="grid-area: content;">
+        <article class="area" style="grid-area: pagetitle;" area="pagetitle">
+            <p class="title">Provided Tasks</p>
+        </article>
+        <article class="area" style="grid-area: contbox;" area="contbox">
+            <div>
+                <table class="clear">
+                    <thead>
+                    <th>Task ID</th>
+                    <th>To Address</th>
+                    <th>Send Amount</th>
+                    <th>Tx Hash</th>
+                    <th>Status</th>
+                    </thead>
+                </table>
+                <div>
+                    <table class="clear">
+                        <tbody class="provider_list_area">
+                        <!-- provider task group start -->
+                                          <tr>
+                                            <td title="Project Title">Project Title</td>
+                                            <td title="kqpwirk1kd002wpe2k409as1dla">kqpwirk1kd002wpe2k409as1dla</td>
+                                            <td title="234w5egwq3ylswp91perijw">234w5egwq3ylswp91perijw</td>
+                                            <td>00-00</td>
+                                            <td class="stat">Status</td>
+                                            <td title="Click to copy"><input type="readonly" onclick="copy(this);" value="0xklakheih12jpweorpqwlknmsdfpasirmwkepigjwl"></td>
+                                          </tr>
+                        <!-- provider task group end -->
+                        <!--
+                          above group is for 1 task.
+                          put each value to the designated area.
+                          each value and title attribute should match.
+                          if one task ended, add class 'done' to <tr> of the group.
+                          to help understanding, check sample below.
+                        -->
+                                          <tr class="done">
+                                            <td title="Project Title 123">Project Title 123</td>
+                                            <td title="pqpwoeqweopiqpow123123123">pqpwoeqweopiqpow123123123</td>
+                                            <td title="dpwpeuwe11900ikkdmfnkek">dpwpeuwe11900ikkdmfnkek</td>
+                                            <td>01-28</td>
+                                            <td class="stat">Done</td>
+                                            <td title="Click to copy"><input type="readonly" onclick="copy(this);" value="0xklakheih12jpweorpqwlknmsdfpasirmwkepigjwl"></td>
+                                          </tr>
+                                          <tr class="">
+                                            <td title="Project Title 123">Project Title 123</td>
+                                            <td title="pqpwoeqweopiqpow123123123">pqpwoeqweopiqpow123123123</td>
+                                            <td title="dpwpeuwe11900ikkdmfnkek">dpwpeuwe11900ikkdmfnkek</td>
+                                            <td>01-28</td>
+                                            <td class="stat">Fail</td>
+                                            <td title="Click to copy"><input type="readonly" onclick="copy(this);" value="0xklakheih12jpweorpqwlknmsdfpasirmwkepigjwl"></td>
+                                          </tr>
+                                          <tr class="done">
+                                            <td title="Project Title 123">Project Title 123</td>
+                                            <td title="pqpwoeqweopiqpow123123123">pqpwoeqweopiqpow123123123</td>
+                                            <td title="dpwpeuwe11900ikkdmfnkek">dpwpeuwe11900ikkdmfnkek</td>
+                                            <td>01-28</td>
+                                            <td class="stat">Done</td>
+                                            <td title="Click to copy"><input type="readonly" onclick="copy(this);" value="0xklakheih12jpweorpqwlknmsdfpasirmwkepigjwl"></td>
+                                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </article>
+    </section>
+    <script src="../../vendor/js/jquery-3.4.1.min.js"></script>
+    <script type="application/javascript">
+        if (typeof module === 'object' && typeof module.exports !== 'undefined') {
+            window.$ = window.jQuery = module.exports;
+        }
+    </script>
+</body>
+</html>

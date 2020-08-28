@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html style="height:100%;">
+  <head>
+    <!-- meta -->
+    <meta charset="utf-8" name="viewport" content="width=device-width, height=device-height, user-scalable=yes">
+    <!-- css & js -->
+    <link rel="stylesheet" href="../css/common.css"/>
+    <!-- <link rel="stylesheet" href="../css/media.css"/> -->
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <!-- title -->
+    <title>CONUN Manager</title>
+  </head>
+  <body>
+    <section id="mini">
+      <article area="statusmin" class="flex">
+        <!--
+          network status.
+          change 'checked' attribute as network status changes.
+          displaying status is handeled by css.
+
+          status-1 : on
+          status-2 : off
+          status-3 : Connection error
+          status-4 : locked (off/offline)
+        -->
+        <input type="radio" name="net-status" id="net-status-1" checked>
+        <label for="net-status-1" style="color:#3BEE7D;"><img src="../img/icon/ico_net_10_on.svg">Online</label>
+        <input type="radio" name="net-status" id="net-status-1">
+        <label for="net-status-1"><img src="../img/icon/ico_net_10_off.svg">Offline</label>
+        <input type="radio" name="net-status" id="net-status-1">
+        <label for="net-status-1" style="color:#D5402F;"><img src="../img/icon/ico_net_10_err.svg">Error</label>
+        <input type="radio" name="net-status" id="net-status-1">
+        <label for="net-status-1"><img src="../img/icon/ico_net_10_off.svg">Locked</label>
+        <!-- . -->
+        <p style="color:#c3ab41;"><img src="../img/icon/ico_node_10.svg"> <span style="color:#c3ab41;">13</span> Nodes</p>
+        <button type="button" name="maximize" class="clear">
+          Max <img src="../img/icon/ico_max.svg" alt="maximize" title="maximize">
+        </button>
+        <!-- pin screen on top -->
+        <input type="checkbox" name="pin" id="pin">
+        <label for="pin">
+          <img src="../img/icon/ico_pin.svg" alt="pin" title="Always on Top">
+          <img src="../img/icon/ico_pin_off.svg" alt="pin" title="Always on Top">
+        </label>
+        <!-- . -->
+      </article>
+      <article area="manager_status" class="flex">
+        <p class="half">Requester<span class="point">None</span></p>
+        <p class="half">Provider<span class="point">48</span></p>
+        <div id="issue" class="mini snap">
+          Issues: <span>No issue.</span>
+        </div>
+        <div id="addr">
+          <div>
+            <p class="mini">Active Wallet</p>
+            <input type="text" readonly id="userwallet" value="0x45633455he465657e446a4474ea484">
+            <button type="button" name="copy" class="button clear" onclick="copytoClip('userwallet');"></button>
+          </div>
+          <div class="snap">
+            <p class="mini">My Node ID</p>
+            <input type="text" readonly id="usernode" value="0x73e45a687854756e764a47">
+            <button type="button" name="copy" class="button clear" onclick="copytoClip('usernode');"></button>
+          </div>
+        </div>
+        <div class="half snap">
+          <p style="color:#929292;">CON</p>
+          <p>999,123,456.789012</p>
+          <p class="mini">9,999,999,999.999999 $</p>
+        </div>
+        <div class="half snap">
+          <p style="color:#929292;">ETH</p>
+          <p>999,123,456.789012</p>
+          <p class="mini">9,999,999,999.999999 $</p>
+        </div>
+        <button type="button" name="open"><img src="../img/icon/ico_arr_down_mini.svg"></button>
+      </article>
+      <!-- contents area -->
+      <article area="contentmini" class="flex">
+        <div id="tab" class="flex">
+          <input type="radio" name="contenttab" id="tab-req" checked>
+          <label for="tab-req" style="margin-right:5px;">Requester</label>
+          <input type="radio" name="contenttab" id="tab-prov">
+          <label for="tab-prov">Provider</label>
+        </div>
+        <!-- requester tab -->
+        <section area="tab-req">
+          <button type="button" name="addproj" onclick="windowOpen('../page/conun/addproject.html', 800, 700)">
+            <img src="../img/icon/ico_add_folder_14.svg" alt="file" title="add project">
+            Add Project
+          </button>
+          <p class="mini">Requested Projects(00)</p> <!-- place projects count on '00' -->
+          <div area="reqlist">
+            <div class="wrap flex">
+              <input type="radio" name="reqlist" id="idhere" checked>
+              <label for="idhere">
+                <p>Project Name</p>
+                <p class="mini">Project ID</p>
+                <span class="reqitem_btn">
+                  <img src="../img/icon/ico_etc.svg" alt="more" title="more">
+                  <span>
+                    <button type="button" name="reqitem_btn_x" class="clear"><img src="../img/icon/ico_cancel_10.svg" alt="cancel" title="cancel"> Cancel Project</button>
+                    <button type="button" name="reqitem_btn_d" class="clear"><img src="../img/icon/ico_trash.svg" alt="delete" title="delete"> Delete Project</button>
+                    <button type="button" name="reqitem_btn_r" class="clear"><img src="../img/icon/ico_resume.svg" alt="resume" title="resume"> Resume Project</button>
+                  </span>
+                </span>
+              </label>
+
+              <!-- repeat sample -->
+              <input type="radio" name="reqlist" id="idhere1">
+              <label for="idhere1" class="done">
+                <p>Project Name</p>
+                <p class="mini">Project ID</p>
+                <span class="reqitem_btn">
+                  <img src="../img/icon/ico_etc.svg" alt="more" title="more">
+                  <span>
+                    <button type="button" name="reqitem_btn_x" class="clear"><img src="../img/icon/ico_cancel_10.svg" alt="cancel" title="cancel"> Cancel Project</button>
+                    <button type="button" name="reqitem_btn_d" class="clear"><img src="../img/icon/ico_trash.svg" alt="delete" title="delete"> Delete Project</button>
+                    <button type="button" name="reqitem_btn_r" class="clear"><img src="../img/icon/ico_resume.svg" alt="resume" title="resume"> Resume Project</button>
+                  </span>
+                </span>
+              </label>
+              <input type="radio" name="reqlist" id="idhere2">
+              <label for="idhere2" class="cancel">
+                <p>Project Name</p>
+                <p class="mini">Project ID</p>
+                <span class="reqitem_btn">
+                  <img src="../img/icon/ico_etc.svg" alt="more" title="more">
+                  <span>
+                    <button type="button" name="reqitem_btn_x" class="clear"><img src="../img/icon/ico_cancel_10.svg" alt="cancel" title="cancel"> Cancel Project</button>
+                    <button type="button" name="reqitem_btn_d" class="clear"><img src="../img/icon/ico_trash.svg" alt="delete" title="delete"> Delete Project</button>
+                    <button type="button" name="reqitem_btn_r" class="clear"><img src="../img/icon/ico_resume.svg" alt="resume" title="resume"> Resume Project</button>
+                  </span>
+                </span>
+              </label>
+              <!-- . -->
+            </div>
+          </div>
+          <div area="reqdetail">
+            <button type="button" name="task_download" class="form full fill"><img src="../img/icon/ico_download.svg" alt="download" title="download"> Download</button>
+            <div>
+              <p>Project Title Text</p><!-- Project Title -->
+              <input type="checkbox" name="reqdetail_sel_all" id="reqdetail_sel_all">
+              <label for="reqdetail_sel_all" class="checkbox"><span></span>&nbsp;Select All</label>
+              <button type="button" name="task_delete" class="clear" onclick="openPopup('yn', 'Are you sure to Delete selected tasks?', 300, 240, '', 1)"><img src="../img/icon/ico_trash.svg" alt="delete" title="delete"> Delete</button>
+            </div>
+            <div class="wrap">
+              <table cellpadding="0" cellspacing="0" class="clear narrow">
+                <tbody>
+                  <!-- task list group start -->
+                  <tr>
+                    <td rowspan="3"><input type="checkbox" name="reqdetail_sel" id="task_TASKIDHERE"><label class="checkbox" for="task_TASKIDHERE"><span></span></label></td>
+                    <td rowspan="3" class="stat">Status</td>
+                    <td class="head">Task ID</td><td title="task id value">task id value</td>
+                  </tr>
+                  <tr><td class="head">Hash</td><td>Hash value</td></tr>
+                  <tr><td class="head prov">Provider</td><td class="prov" title="Click to Copy"><input type="readonly" onclick="copy(this);" value="Provider Wallet Here"></td></tr>
+                  <!-- . -->
+
+                  <tr class="done">
+                    <td rowspan="3"><input type="checkbox" name="reqdetail_sel" id="task_TASKIDHERE1"><label class="checkbox" for="task_TASKIDHERE1"><span></span></label></td>
+                    <td rowspan="3" class="stat">Done</td>
+                    <td class="head">Task ID</td><td title="task id value">task id value</td>
+                  </tr>
+                  <tr><td class="head">Hash</td><td>Hash value</td></tr>
+                  <tr><td class="head prov">Provider</td><td class="prov" title="Click to Copy"><input type="readonly" onclick="copy(this);" value="Provider Wallet Here"></td></tr>
+                  <tr class="">
+                    <td rowspan="3"><input type="checkbox" name="reqdetail_sel" id="task_TASKIDHERE2"><label class="checkbox" for="task_TASKIDHERE2"><span></span></label></td>
+                    <td rowspan="3" class="stat">Deleted</td>
+                    <td class="head">Task ID</td><td title="task id value">task id value</td>
+                  </tr>
+                  <tr><td class="head">Hash</td><td>Hash value</td></tr>
+                  <tr><td class="head prov">Provider</td><td class="prov" title="Click to Copy"><input type="readonly" onclick="copy(this);" value="Provider Wallet Here"></td></tr>
+                  <tr class="">
+                    <td rowspan="3"><input type="checkbox" name="reqdetail_sel" id="task_TASKIDHERE3"><label class="checkbox" for="task_TASKIDHERE3"><span></span></label></td>
+                    <td rowspan="3" class="stat">Fail</td>
+                    <td class="head">Task ID</td><td title="task id value">task id value</td>
+                  </tr>
+                  <tr><td class="head">Hash</td><td>Hash value</td></tr>
+                  <tr><td class="head prov">Provider</td><td class="prov" title="Click to Copy"><input type="readonly" onclick="copy(this);" value="Provider Wallet Here"></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <!-- provider tab -->
+        <section area="tab-prov">
+          <table class="clear narrow">
+            <thead>
+              <th>Status</th>
+              <th>Project</th>
+              <th>Details</th>
+            </thead>
+          </table>
+          <div>
+            <table class="clear narrow">
+              <tbody>
+                <!-- provider task group start -->
+                <tr>
+                  <td rowspan="2" class="stat">Status</td>
+                  <td rowspan="2" class="proj">AA Project</td>
+                  <td class="head">Task ID</td><td title="task id value">task id value</td>
+                </tr>
+                <tr><td class="head">File</td><td title="File Hash value">File Hash value</td></tr>
+                <tr>
+                  <td colspan="2">00-00, 00:00</td>
+                  <td class="head prov">TxHash</td>
+                  <td class="prov" title="Click to Copy"><input type="readonly" onclick="copy(this);" value="TxHash Here"></td>
+                </tr>
+                <!-- provider task group end -->
+
+
+                <!-- sample rows -->
+                <tr class="done">
+                  <td rowspan="2" class="stat">Status</td>
+                  <td rowspan="2" class="proj">AA Project</td>
+                  <td class="head">Task ID</td><td title="task id value">task id value</td>
+                </tr>
+                <tr><td class="head">File</td><td title="File Hash value">File Hash value</td></tr>
+                <tr>
+                  <td colspan="2">00-00, 00:00</td>
+                  <td class="head prov">TxHash</td>
+                  <td class="prov" title="Click to Copy"><input type="readonly" onclick="copy(this);" value="TxHash Here"></td>
+                </tr>
+                <tr class="done">
+                  <td rowspan="2" class="stat">Status</td>
+                  <td rowspan="2" class="proj">AA Project</td>
+                  <td class="head">Task ID</td><td title="task id value">task id value</td>
+                </tr>
+                <tr><td class="head">File</td><td title="File Hash value">File Hash value</td></tr>
+                <tr>
+                  <td colspan="2">00-00, 00:00</td>
+                  <td class="head prov">TxHash</td>
+                  <td class="prov" title="Click to Copy"><input type="readonly" onclick="copy(this);" value="TxHash Here"></td>
+                </tr>
+                <tr>
+                  <td rowspan="2" class="stat">Status</td>
+                  <td rowspan="2" class="proj">AA Project</td>
+                  <td class="head">Task ID</td><td title="task id value">task id value</td>
+                </tr>
+                <tr><td class="head">File</td><td title="File Hash value">File Hash value</td></tr>
+                <tr>
+                  <td colspan="2">00-00, 00:00</td>
+                  <td class="head prov">TxHash</td>
+                  <td class="prov" title="Click to Copy"><input type="readonly" onclick="copy(this);" value="TxHash Here"></td>
+                </tr>
+                <tr>
+                  <td rowspan="2" class="stat">Status</td>
+                  <td rowspan="2" class="proj">AA Project</td>
+                  <td class="head">Task ID</td><td title="task id value">task id value</td>
+                </tr>
+                <tr><td class="head">File</td><td title="File Hash value">File Hash value</td></tr>
+                <tr>
+                  <td colspan="2">00-00, 00:00</td>
+                  <td class="head prov">TxHash</td>
+                  <td class="prov" title="Click to Copy"><input type="readonly" onclick="copy(this);" value="TxHash Here"></td>
+                </tr>
+                <tr>
+                  <td rowspan="2" class="stat">Status</td>
+                  <td rowspan="2" class="proj">AA Project</td>
+                  <td class="head">Task ID</td><td title="task id value">task id value</td>
+                </tr>
+                <tr><td class="head">File</td><td title="File Hash value">File Hash value</td></tr>
+                <tr>
+                  <td colspan="2">00-00, 00:00</td>
+                  <td class="head prov">TxHash</td>
+                  <td class="prov" title="Click to Copy"><input type="readonly" onclick="copy(this);" value="TxHash Here"></td>
+                </tr>
+                <tr>
+                  <td rowspan="2" class="stat">Status</td>
+                  <td rowspan="2" class="proj">AA Project</td>
+                  <td class="head">Task ID</td><td title="task id value">task id value</td>
+                </tr>
+                <tr><td class="head">File</td><td title="File Hash value">File Hash value</td></tr>
+                <tr>
+                  <td colspan="2">00-00, 00:00</td>
+                  <td class="head prov">TxHash</td>
+                  <td class="prov" title="Click to Copy"><input type="readonly" onclick="copy(this);" value="TxHash Here"></td>
+                </tr>
+                <!-- sample rows end -->
+
+
+              </tbody>
+            </table>
+          </div>
+          <div area="prov-mode">
+            <p class="mini">Provider Mode</p>
+            <input type="checkbox" name="prov-mode" id="prov-mode" checked>
+            <label for="prov-mode"><span class="snap"></span></label>
+          </div>
+        </section>
+      </article>
+      <footer class="flex">
+        <a href="">Open Logs</a>
+        <span>Version 0.0.1</span>
+        <a href="">FAQ</a>
+      </footer>
+    </section>
+    <script src="../js/common.js"></script>
+    <script type="text/javascript">
+      $('button[name="open"]').on('click',function(){
+        $('article[area="manager_status"]').toggleClass('on');
+      })
+      $('input[name="contenttab"]').on('change',function(){
+        $('section[area="tab-req"]').toggle();
+        $('section[area="tab-prov"]').toggle();
+      })
+
+      // request select// input select all & select each
+      $('input[name="reqdetail_sel"]').on('change',function(){
+        $each = $('input[name="reqdetail_sel"]');
+        $all = $('input#reqdetail_sel_all');
+        var sel_cnt = $each.length;
+        if($('input[name="reqdetail_sel"]:checked').length == sel_cnt){
+          $all.prop('checked', true).change();
+        }else {
+          $all.prop('checked', false);
+        }
+        if($('input[name="reqdetail_sel"]:checked').length == 0){
+          $('button[name="task_download"]').hide();
+          $('button[name="task_delete"]').hide();
+        }else {
+          $('button[name="task_download"]').show();
+          $('button[name="task_delete"]').show();
+        }
+      })
+      $('input#reqdetail_sel_all').on('change',function(){
+        $each = $('input[name="reqdetail_sel"]');
+        var sel_cnt = $each.length;
+        if($(this).is(':checked')){
+          $each.prop('checked', true);
+          $('button[name="task_download"]').show();
+          $('button[name="task_delete"]').show();
+        }else {
+          $each.prop('checked', false).change();
+          $('button[name="task_download"]').hide();
+          $('button[name="task_delete"]').hide();
+        }
+      })
+      $('.reqitem_btn').hover(function(e){
+        if(e.pageX > $(document).width() - 100){
+          $x = e.pageX - 120;
+        }else {
+          $x = e.pageX - 20;
+        }
+        $y = e.pageY - 10;
+        $(this).children('span').toggleClass('on');
+        $(this).children('span').css({'left':$x, 'top':$y});
+      })
+    </script>
+  </body>
+</html>

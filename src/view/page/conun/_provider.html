@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- meta -->
+    <meta charset="utf-8" name="viewport" content="width=device-width, height=device-height, user-scalable=yes">
+    <!-- css & js -->
+    <link rel="stylesheet" href="../../css/common.css"/>
+    <!-- <link rel="stylesheet" href="../../css/media.css"/> -->
+    <!-- title -->
+    <title>CONUN Manager</title>
+</head>
+<body>
+<section id="default">
+    <!-- left menu -->
+    <nav style="grid-area: nav;">
+        <a href="#"><img src="../../img/main_logo.svg" alt="CONUN DSC Logo" title="CONUN DSC Logo"></a>
+        <ul class="menu" id="menu">
+            <li><p><a href="../home.html"><img src="../../img/icon/ico_home.svg" alt="home" title="home">Home</a></p></li>
+            <li class="d on">
+                <p><img src="../../img/icon/ico_conun.svg" alt="CONUN" title="CONUN">CONUN</p>
+                <ul class="menu">
+                    <li><p><a href="../conun/requester.html"><img src="../../img/icon/ico_req.svg" alt="Requester" title="Requester">Requester</a></p></li>
+                    <li class="on"><p><img src="../../img/icon/ico_prov.svg" alt="Provider" title="Provider">Provider</p></li>
+                    <!-- <li><img src="../../img/icon/ico_logs.svg" alt="Logs" title="Logs">Logs</li> -->
+                </ul>
+            </li>
+            <li class="d">
+                <p><img src="../../img/icon/ico_wallet.svg" alt="Wallet" title="Wallet">Wallet</p>
+                <ul class="menu">
+                    <li><p><a href="../wallet/transaction.html"><img src="../../img/icon/ico_trans.svg" alt="Transaction" title="Transaction">Transaction</a></p></li>
+                    <li><p><a href="../wallet/management.html"><img src="../../img/icon/ico_wallet_manage.svg" alt="Manage" title="Manage">Manage</a></p></li>
+                    <!--              <li><p><img src="../../img/icon/ico_history.svg" alt="History" title="History">History</p></li>-->
+                </ul>
+            </li>
+            <li><p><a href="../setting/setting.html"><img src="../../img/icon/ico_setting.svg" alt="Setting" title="Setting">Setting</a></p></li>
+        </ul>
+        <ul id="menu_etc">
+            <li><a href="http://conun.io" target="_blank"><img src="../../img/icon/ico_globe.svg" alt="website" title="website" style="vertical-align:middle;"> conun.io</a></li>
+            <li>Version 0.1</li>
+        </ul>
+    </nav>
+    <!-- contents -->
+    <section class="grid sub conun prov" style="grid-area: content;">
+        <article class="area narrow" style="grid-area: status;" area="status">
+            <p><img src="../../img/icon/ico_network.svg" alt="network" title="network"> Network Status<span id="txt_network_status"></span></p>
+            <p>Workable Nodes<span id="txt_node_count"></span></p>
+            <button type="button" name="minimize" class="clear">
+                Minimize <img src="../../img/icon/ico_mini.svg" alt="minimize" title="minimize">
+            </button>
+        </article>
+        <!-- 내용은 이 아래 영역 안에 -->
+        <article class="area" style="grid-area: pagetitle;" area="pagetitle">
+            <p class="title">Provided Tasks</p>
+        </article>
+        <article class="area" style="grid-area: contbox;" area="contbox">
+            <div>
+                <table class="clear">
+                    <thead>
+                    <th>Project</th>
+                    <th>Task ID</th>
+                    <th>File Hash</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Tx Hash</th>
+                    </thead>
+                </table>
+                <div>
+                    <table class="clear">
+                        <tbody class="provider_list_area">
+                        <!-- provider task group start -->
+                        <!--                  <tr>-->
+                        <!--                    <td title="Project Title">Project Title</td>-->
+                        <!--                    <td title="kqpwirk1kd002wpe2k409as1dla">kqpwirk1kd002wpe2k409as1dla</td>-->
+                        <!--                    <td title="234w5egwq3ylswp91perijw">234w5egwq3ylswp91perijw</td>-->
+                        <!--                    <td>00-00</td>-->
+                        <!--                    <td class="stat">Status</td>-->
+                        <!--                    <td title="Click to copy"><input type="readonly" onclick="copy(this);" value="0xklakheih12jpweorpqwlknmsdfpasirmwkepigjwl"></td>-->
+                        <!--                  </tr>-->
+                        <!-- provider task group end -->
+                        <!--
+                          above group is for 1 task.
+                          put each value to the designated area.
+                          each value and title attribute should match.
+                          if one task ended, add class 'done' to <tr> of the group.
+                          to help understanding, check sample below.
+                        -->
+                        <!--                  <tr class="done">-->
+                        <!--                    <td title="Project Title 123">Project Title 123</td>-->
+                        <!--                    <td title="pqpwoeqweopiqpow123123123">pqpwoeqweopiqpow123123123</td>-->
+                        <!--                    <td title="dpwpeuwe11900ikkdmfnkek">dpwpeuwe11900ikkdmfnkek</td>-->
+                        <!--                    <td>01-28</td>-->
+                        <!--                    <td class="stat">Done</td>-->
+                        <!--                    <td title="Click to copy"><input type="readonly" onclick="copy(this);" value="0xklakheih12jpweorpqwlknmsdfpasirmwkepigjwl"></td>-->
+                        <!--                  </tr>-->
+                        <!--                  <tr class="">-->
+                        <!--                    <td title="Project Title 123">Project Title 123</td>-->
+                        <!--                    <td title="pqpwoeqweopiqpow123123123">pqpwoeqweopiqpow123123123</td>-->
+                        <!--                    <td title="dpwpeuwe11900ikkdmfnkek">dpwpeuwe11900ikkdmfnkek</td>-->
+                        <!--                    <td>01-28</td>-->
+                        <!--                    <td class="stat">Fail</td>-->
+                        <!--                    <td title="Click to copy"><input type="readonly" onclick="copy(this);" value="0xklakheih12jpweorpqwlknmsdfpasirmwkepigjwl"></td>-->
+                        <!--                  </tr>-->
+                        <!--                  <tr class="done">-->
+                        <!--                    <td title="Project Title 123">Project Title 123</td>-->
+                        <!--                    <td title="pqpwoeqweopiqpow123123123">pqpwoeqweopiqpow123123123</td>-->
+                        <!--                    <td title="dpwpeuwe11900ikkdmfnkek">dpwpeuwe11900ikkdmfnkek</td>-->
+                        <!--                    <td>01-28</td>-->
+                        <!--                    <td class="stat">Done</td>-->
+                        <!--                    <td title="Click to copy"><input type="readonly" onclick="copy(this);" value="0xklakheih12jpweorpqwlknmsdfpasirmwkepigjwl"></td>-->
+                        <!--                  </tr>-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </article>
+    </section>
+</section>
+<script src="../../vendor/js/jquery-3.4.1.min.js"></script>
+<script type="application/javascript">
+    if (typeof module === 'object' && typeof module.exports !== 'undefined') {
+        window.$ = window.jQuery = module.exports;
+    }
+</script>
+<script type="text/javascript" src="../../vendor/js/common.js"></script>
+<script>
+    const {appLocation} = require('../../../js/controller/ui/main/ui.main');
+    appLocation.setDefine('appLocation', 'PROVIDER');
+    require('../../../js/controller/ui/main/ui.conun.provider');
+</script>
+</body>
+</html>

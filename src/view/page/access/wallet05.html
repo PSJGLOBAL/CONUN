@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+    <meta charset="utf-8" name="viewport" content="width=device-width, height=device-height, user-scalable=yes">
+    <!-- css & js -->
+    <link rel="stylesheet" href="../../css/common.css"/>
+    <!-- <link rel="stylesheet" href="../css/media.css"/> -->
+    <!-- title -->
+    <title>CONUN Manager | Access Wallet</title>
+  </head>
+  <body>
+    <section id="access" page="wallet04">
+      <nav style="grid-area: nav;">
+        <a href="#"><img src="../../img/main_logo.svg" alt="CONUN DSC Logo" title="CONUN DSC Logo"></a>
+      </nav>
+      <p class="title mid" style="grid-area: page;">Access Existing Wallet</p>
+      <div style="grid-area: blank-l;"></div>
+      <div style="grid-area: blank-r;"></div>
+      <section style="grid-area: form;" area="form">
+        <p class="title">Import with KeyStoreFile</p>
+        <p class="paragraph gray">
+          Upload your wallet KeyStoreFile.json<br>
+          and enter password.
+        </p>
+        <form id="import_wallet">
+          <div class="wrap">
+            <input class="default large" type="file" name="userfile" id="userfile">
+          </div>
+          <div class="wrap" style="margin-top:30px;">
+            <input class="int_wallet_password default" type="password" name="walletpw" id="walletpw" placeholder="Enter Wallet Password" required>
+            <label for="walletpw">Wallet Password</label>
+          </div>
+          <div class="wrap">
+            <button type="button" name="importWallet" class="btn_wallet_password form full fill">Import Wallet</button>
+          </div>
+        </form>
+        <div class="flex">
+          <a href="../access/wallet04.html" class="page_control snap">
+            <span><img src="../../img/icon/ico_arr_l.svg" alt="back" title="back"></span>
+            Back
+          </a>
+          <a href="" class="page_control snap"></a>
+        </div>
+      </section>
+    </section>
+    <footer class="flex">
+      <span>Version 0.0.1</span>
+      <div>
+        <a href="http://conun.io" target="_blank">
+          <img src="../../img/icon/ico_world.svg" alt="conun homepage" title="conun homepage">
+          Home
+        </a>
+        <a href="https://t.me/joinchat/BEd-ABhvx-GK9_G3fxnYvg" target="_blank">
+          <img src="../../img/icon/ico_telegram.svg" alt="conun telegram" title="conun telegram">
+          Telegram
+        </a>
+      </div>
+    </footer>
+    <script src="../../vendor/js/jquery-3.4.1.min.js"></script>
+    <script type="application/javascript">
+      if (typeof module === 'object' && typeof module.exports !== 'undefined') {
+        window.$ = window.jQuery = module.exports;
+      }
+    </script>
+    <script src="../../vendor/js/common.js"></script>
+    <script>
+      require('../../../js/controller/ui/ui.import.keystore');
+    </script>
+  </body>
+</html>

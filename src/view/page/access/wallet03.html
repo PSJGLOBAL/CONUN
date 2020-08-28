@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+    <meta charset="utf-8" name="viewport" content="width=device-width, height=device-height, user-scalable=yes">
+    <!-- css & js -->
+    <link rel="stylesheet" href="../../css/common.css"/>
+    <!-- <link rel="stylesheet" href="../css/media.css"/> -->
+    <!-- title -->
+    <title>CONUN Manager | Access Wallet</title>
+  </head>
+  <body>
+    <section id="access" page="wallet03">
+      <nav style="grid-area: nav;">
+        <a href="#"><img src="../../img/main_logo.svg" alt="CONUN DSC Logo" title="CONUN DSC Logo"></a>
+      </nav>
+      <p class="title mid" style="grid-area: page;">Finished</p>
+      <div style="grid-area: blank-l;"></div>
+      <div style="grid-area: blank-r;"></div>
+      <section style="grid-area: form;" area="form">
+        <p class="title">Account Created Successfully</p>
+        <p class="paragraph gray">
+          Welcome to CONUN Distributed Supercomputing Platform.<br>
+          Please backup your account information and Download QR Code.
+        </p>
+        <form>
+          <div class="user-info">
+            <p>ACCOUNT ID</p>
+            <input type="text" id="userwallet" readonly>
+            <button type="button" name="copy" class="button clear" onclick="copytoClip('userwallet');"></button>
+          </div>
+          <div class="user-info">
+            <p>PRIVATE KEY</p>
+            <input type="text" id="wallet_pk" readonly>
+            <button type="button" name="copy" class="button clear" onclick="copytoClip('wallet_pk');"></button>
+          </div>
+          <div class="wrap flex">
+            <button type="button" name="backup" class="btn_jsonWalletKey_expo fat half">
+              Backup Wallet<br>KeyStoreFile.json
+              <img src="../../img/icon/ico_download.svg" alt="backup">
+            </button>
+            <button type="button" name="backup" class="btn_qrCode_expo fat half">
+              Export Account<br>QR Code
+              <img src="../../img/icon/ico_export.svg" alt="export">
+            </button>
+          </div>
+        </form>
+        <div class="flex">
+          <a href="" class="page_control snap"></a>
+<!--          <a class="btn_next_home page_control snap" onclick="popupWindow('wallet03', 350, 300)">-->
+          <a class="btn_next_home page_control snap">
+            Next
+            <span><img src="../../img/icon/ico_arr_r.svg" alt="next" title="next"></span>
+          </a>
+
+        </div>
+      </section>
+    </section>
+    <footer class="flex">
+      <span>Version 0.0.1</span>
+      <div>
+        <a href="http://conun.io" target="_blank">
+          <img src="../../img/icon/ico_world.svg" alt="conun homepage" title="conun homepage">
+          Home
+        </a>
+        <a href="https://t.me/joinchat/BEd-ABhvx-GK9_G3fxnYvg" target="_blank">
+          <img src="../../img/icon/ico_telegram.svg" alt="conun telegram" title="conun telegram">
+          Telegram
+        </a>
+      </div>
+    </footer>
+    <script>
+      console.log('wallet3 started');
+    </script>
+    <script src="../../vendor/js/jquery-3.4.1.min.js"></script>
+    <script type="application/javascript">
+      if (typeof module === 'object' && typeof module.exports !== 'undefined') {
+        window.$ = window.jQuery = module.exports;
+      }
+    </script>
+    <script src="../../vendor/js/common.js"></script>
+    <script>
+      require('../../../js/controller/ui/ui.backup.account')
+    </script>
+
+  </body>
+</html>

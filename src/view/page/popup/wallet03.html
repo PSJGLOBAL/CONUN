@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+    <meta charset="utf-8" name="viewport" content="width=device-width, height=device-height, user-scalable=yes">
+    <!-- css & js -->
+    <link rel="stylesheet" href="../../css/common.css"/>
+    <title>Did you backup your account?</title>
+  </head>
+  <body>
+    <form class="popup">
+      <p class="title mid">Did you backup your belongings in safe place?</p>
+      <div class="p-content">
+        <input type="checkbox" name="backup_check" id="backup_check_1">
+        <label for="backup_check_1"><span class="checkbox"></span>Backup Node UID</label>
+        <input type="checkbox" name="backup_check" id="backup_check_2">
+        <label for="backup_check_2"><span class="checkbox"></span>Backup Wallet keystore</label>
+        <p>or,</p>
+        <input type="checkbox" name="backup_check" id="backup_check_3">
+        <label for="backup_check_3"><span class="checkbox"></span>Exported QR Code</label>
+      </div>
+      <div class="flex">
+        <button type="button" name="nobackup" class="form half thin" onclick="window.close();">No</button>
+        <button type="button" name="yesbackup" id="btn_backup_check_yes" class="form half thin fill" disabled>Yes</button>
+      </div>
+    </form>
+
+    <script src="../../vendor/js/jquery-3.4.1.min.js"></script>
+    <script type="application/javascript">
+      if (typeof module === 'object' && typeof module.exports !== 'undefined') {
+        window.$ = window.jQuery = module.exports;
+      }
+    </script>
+    <script src="../../vendor/js/common.js"></script>
+<!--    <script>-->
+<!--      require('../../../js/controller/ui/access/ui.backup.account')-->
+<!--    </script>-->
+    <script type="text/javascript">
+
+      $(document).ready(function(){
+        var h = $(window).height();
+        $('form.popup').css({height:h});
+      })
+
+      $('input[name="backup_check"]').on('change',function(){
+        if($('input#backup_check_1').is(':checked') && $('input#backup_check_2').is(':checked')){
+          $('button[name="yesbackup"]').removeAttr('disabled');
+        }else if($('input#backup_check_3').is(':checked')){
+          $('button[name="yesbackup"]').removeAttr('disabled');
+        }else {
+          $('button[name="yesbackup"]').prop('disabled', true);
+        }
+      })
+      $('button[name="yesbackup"]').on('click', function() {
+        if(!$(this).is(':disabled')){
+          let { ipcDispatcher } = require('conun-ipc/middleware/ipcRenderer.poster')
+                ipcDispatcher.OPEN_MAIN_WINDOW = 'app-ready-event';
+          window.close();
+        }
+      })
+    </script>
+  </body>
+</html>
