@@ -2259,3 +2259,15 @@ button.update__btn {
   opacity: .55;
   line-height: 1;
 }
+
+/* obdev css  */
+
+.table_area{
+  position: relative;
+}
+#input_section{
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+}

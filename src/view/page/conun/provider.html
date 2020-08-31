@@ -4,7 +4,8 @@
   <!-- meta -->
   <meta charset="utf-8" name="viewport" content="width=device-width, height=device-height, user-scalable=yes">
   <!-- css & js -->
-  <link rel="stylesheet" href="../../css/common.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="../../css/common.css" />
   <!-- <link rel="stylesheet" href="../../css/media.css"/> -->
   <!-- title -->
   <title>CONUN Manager</title>
@@ -15,11 +16,11 @@
   <nav style="grid-area: nav;">
     <a href="#"><img src="../../img/main_logo.svg" alt="CONUN DSC Logo" title="CONUN DSC Logo"></a>
     <ul class="menu" id="menu">
-      <li><p><a href="../home.html"><img src="../../img/icon/ico_home.svg" alt="home" title="home">Home</a></p></li>
+      <li><p><a class="text-white text-decoration-none" href="../home.html"><img src="../../img/icon/ico_home.svg" alt="home" title="home">Home</a></p></li>
       <li class="d on">
         <p><img src="../../img/icon/ico_conun.svg" alt="CONUN" title="CONUN">CONUN</p>
         <ul class="menu">
-          <li><p><a href="../conun/requester.html"><img src="../../img/icon/ico_req.svg" alt="Requester" title="Requester">Requester</a></p></li>
+          <li><p><a class="text-white text-decoration-none" href="../conun/requester.html"><img src="../../img/icon/ico_req.svg" alt="Requester" title="Requester">Requester</a></p></li>
           <li class="on"><p><img src="../../img/icon/ico_prov.svg" alt="Provider" title="Provider">Provider</p></li>
           <!-- <li><img src="../../img/icon/ico_logs.svg" alt="Logs" title="Logs">Logs</li> -->
         </ul>
@@ -27,12 +28,12 @@
       <li class="d">
         <p><img src="../../img/icon/ico_wallet.svg" alt="Wallet" title="Wallet">Wallet</p>
         <ul class="menu">
-          <li><p><a href="../wallet/transaction.html"><img src="../../img/icon/ico_trans.svg" alt="Transaction" title="Transaction">Transaction</a></p></li>
-          <li><p><a href="../wallet/management.html"><img src="../../img/icon/ico_wallet_manage.svg" alt="Manage" title="Manage">Manage</a></p></li>
+          <li><p><a class="text-white text-decoration-none" href="../wallet/transaction.html"><img src="../../img/icon/ico_trans.svg" alt="Transaction" title="Transaction">Transaction</a></p></li>
+          <li><p><a class="text-white text-decoration-none" href="../wallet/management.html"><img src="../../img/icon/ico_wallet_manage.svg" alt="Manage" title="Manage">Manage</a></p></li>
           <!--              <li><p><img src="../../img/icon/ico_history.svg" alt="History" title="History">History</p></li>-->
         </ul>
       </li>
-      <li><p><a href="../setting/setting.html"><img src="../../img/icon/ico_setting.svg" alt="Setting" title="Setting">Setting</a></p></li>
+      <li><p><a class="text-white text-decoration-none" href="../setting/setting.html"><img src="../../img/icon/ico_setting.svg" alt="Setting" title="Setting">Setting</a></p></li>
     </ul>
     <ul id="menu_etc">
       <li><a href="http://conun.io" target="_blank"><img src="../../img/icon/ico_globe.svg" alt="website" title="website" style="vertical-align:middle;"> conun.io</a></li>
@@ -42,8 +43,8 @@
   <!-- contents -->
   <section class="grid sub conun prov" style="grid-area: content;">
     <article class="area narrow" style="grid-area: status;" area="status">
-      <p><img src="../../img/icon/ico_network.svg" alt="network" title="network"> Network Status<span id="txt_network_status"></span></p>
-      <p>Workable Nodes<span id="txt_node_count"></span></p>
+      <p><img src="../../img/icon/ico_network.svg" alt="network" title="network"> Network Status<span class="">Connected</span></p>
+      <p>Workable Nodes<span>13</span></p>
       <button type="button" name="minimize" class="clear">
         Minimize <img src="../../img/icon/ico_mini.svg" alt="minimize" title="minimize">
       </button>
@@ -52,7 +53,7 @@
     <article class="area" style="grid-area: pagetitle;" area="pagetitle">
       <p class="title">Provided Tasks</p>
     </article>
-    <article class="area" style="grid-area: contbox;" area="contbox">
+    <article class="area table_area" style="grid-area: contbox;" area="contbox">
       <div>
         <table class="clear">
           <thead>
@@ -66,62 +67,198 @@
         </table>
         <div>
           <table class="clear">
-            <tbody class="provider_list_area">
+            <tbody>
             <!-- provider task group start -->
-            <!--                  <tr>-->
-            <!--                    <td title="Project Title">Project Title</td>-->
-            <!--                    <td title="kqpwirk1kd002wpe2k409as1dla">kqpwirk1kd002wpe2k409as1dla</td>-->
-            <!--                    <td title="234w5egwq3ylswp91perijw">234w5egwq3ylswp91perijw</td>-->
-            <!--                    <td>00-00</td>-->
-            <!--                    <td class="stat">Status</td>-->
-            <!--                    <td title="Click to copy"><input type="readonly" onclick="copy(this);" value="0xklakheih12jpweorpqwlknmsdfpasirmwkepigjwl"></td>-->
-            <!--                  </tr>-->
+            <tr class="dialoged">
+              <td title="Project Title">Project Title</td>
+              <td title="kqpwirk1kd002wpe2k409as1dla">kqpwirk1kd002wpe2k409as1dla</td>
+              <td title="234w5egwq3ylswp91perijw">234w5egwq3ylswp91perijw</td>
+              <td>00-00</td>
+              <td class="stat">Status</td>
+              <td title="Click to copy"><input type="readonly" onclick="copy(this);" value="0xklakheih12jpweorpqwlknmsdfpasirmwkepigjwl"></td>
+            </tr>
             <!-- provider task group end -->
             <!--
-              above group is for 1 task.
-              put each value to the designated area.
-              each value and title attribute should match.
-              if one task ended, add class 'done' to <tr> of the group.
-              to help understanding, check sample below.
-            -->
-            <!--                  <tr class="done">-->
-            <!--                    <td title="Project Title 123">Project Title 123</td>-->
-            <!--                    <td title="pqpwoeqweopiqpow123123123">pqpwoeqweopiqpow123123123</td>-->
-            <!--                    <td title="dpwpeuwe11900ikkdmfnkek">dpwpeuwe11900ikkdmfnkek</td>-->
-            <!--                    <td>01-28</td>-->
-            <!--                    <td class="stat">Done</td>-->
-            <!--                    <td title="Click to copy"><input type="readonly" onclick="copy(this);" value="0xklakheih12jpweorpqwlknmsdfpasirmwkepigjwl"></td>-->
-            <!--                  </tr>-->
-            <!--                  <tr class="">-->
-            <!--                    <td title="Project Title 123">Project Title 123</td>-->
-            <!--                    <td title="pqpwoeqweopiqpow123123123">pqpwoeqweopiqpow123123123</td>-->
-            <!--                    <td title="dpwpeuwe11900ikkdmfnkek">dpwpeuwe11900ikkdmfnkek</td>-->
-            <!--                    <td>01-28</td>-->
-            <!--                    <td class="stat">Fail</td>-->
-            <!--                    <td title="Click to copy"><input type="readonly" onclick="copy(this);" value="0xklakheih12jpweorpqwlknmsdfpasirmwkepigjwl"></td>-->
-            <!--                  </tr>-->
-            <!--                  <tr class="done">-->
-            <!--                    <td title="Project Title 123">Project Title 123</td>-->
-            <!--                    <td title="pqpwoeqweopiqpow123123123">pqpwoeqweopiqpow123123123</td>-->
-            <!--                    <td title="dpwpeuwe11900ikkdmfnkek">dpwpeuwe11900ikkdmfnkek</td>-->
-            <!--                    <td>01-28</td>-->
-            <!--                    <td class="stat">Done</td>-->
-            <!--                    <td title="Click to copy"><input type="readonly" onclick="copy(this);" value="0xklakheih12jpweorpqwlknmsdfpasirmwkepigjwl"></td>-->
-            <!--                  </tr>-->
+above group is for 1 task.
+put each value to the designated area.
+each value and title attribute should match.
+if one task ended, add class 'done' to <tr> of the group.
+to help understanding, check sample below.
+-->
+            <tr class="done dialoged">
+              <td title="Project Title 123">Project Title 123</td>
+              <td title="pqpwoeqweopiqpow123123123">pqpwoeqweopiqpow123123123</td>
+              <td title="dpwpeuwe11900ikkdmfnkek">dpwpeuwe11900ikkdmfnkek</td>
+              <td>01-28</td>
+              <td class="stat">Done</td>
+              <td title="Click to copy"><input type="readonly" onclick="copy(this);" value="0xklakheih12jpweorpqwlknmsdfpasirmwkepigjwl"></td>
+            </tr>
+            <tr class=" dialoged">
+              <td title="Project Title 123">Project Title 123</td>
+              <td title="pqpwoeqweopiqpow123123123">pqpwoeqweopiqpow123123123</td>
+              <td title="dpwpeuwe11900ikkdmfnkek">dpwpeuwe11900ikkdmfnkek</td>
+              <td>01-28</td>
+              <td class="stat">Fail</td>
+              <td title="Click to copy"><input type="readonly" onclick="copy(this);" value="0xklakheih12jpweorpqwlknmsdfpasirmwkepigjwl"></td>
+            </tr>
+            <tr class="done dialoged">
+              <td title="Project Title 123">Project Title 123</td>
+              <td title="pqpwoeqweopiqpow123123123">pqpwoeqweopiqpow123123123</td>
+              <td title="dpwpeuwe11900ikkdmfnkek">dpwpeuwe11900ikkdmfnkek</td>
+              <td>01-28</td>
+              <td class="stat">Done</td>
+              <td title="Click to copy"><input type="readonly" onclick="copy(this);" value="0xklakheih12jpweorpqwlknmsdfpasirmwkepigjwl"></td>
+            </tr>
             </tbody>
           </table>
         </div>
       </div>
+
+      <div class="w-100" id="input_section" style="display: none">
+        <div class="row p-3  area table_area">
+          <table class="clear table text-center">
+            <thead>
+            <th>Name</th>
+            <th>Value</th>
+            </thead>
+          </table>
+          <div>
+            <table class="clear text-center">
+              <tbody>
+              <!-- provider task group start -->
+              <tr class="dialoged">
+                <td title="Project Title">Project Name</td>
+                <td title="kqpwirk1kd002wpe2k409as1dla">Name1234</td>
+               </tr>
+              <tr class="dialoged">
+                <td title="Project Title">Project Name</td>
+                <td title="kqpwirk1kd002wpe2k409as1dla">Name1234</td>
+              </tr>
+              <tr class="dialoged">
+                <td title="Project Title">Project Name</td>
+                <td title="kqpwirk1kd002wpe2k409as1dla">Name1234</td>
+              </tr>
+              <tr class="dialoged">
+                <td title="Project Title">Project Name</td>
+                <td title="kqpwirk1kd002wpe2k409as1dla">Name1234</td>
+              </tr>
+              <!-- provider task group end -->
+              <!--
+  above group is for 1 task.
+  put each value to the designated area.
+  each value and title attribute should match.
+  if one task ended, add class 'done' to <tr> of the group.
+  to help understanding, check sample below.
+-->
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex justify-content-end w-100">
+            <button class="btn btn-outline-secondary" id="close_input">Close</button>
+            <button class="btn btn-outline-success" id="submit_btn">Submit</button>
+          </div>
+        </div>
+      </div>
+
+
     </article>
+
+    <!-- Input area -->
   </section>
+
 </section>
+
 <script src="../../vendor/js/jquery-3.4.1.min.js"></script>
 <script type="application/javascript">
   if (typeof module === 'object' && typeof module.exports !== 'undefined') {
     window.$ = window.jQuery = module.exports;
   }
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/jqueryui@1.11.1/jquery-ui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../../vendor/js/common.js"></script>
+<script>
+  $('button[name="argument_control"]').on('click', function() {
+    $(this).siblings('input.proj_argument').change();
+  })
+  $('input.proj_argument').on('change', function() {
+    $val = parseInt($(this).val()) + 1;
+    $(this).parent().siblings('td.proj_argument').children('input[name="proj_arg_max"]').attr('min', $val);
+  })
+  $('input[name="proj_arg_min"]').on('change', function() {
+    $val = parseInt($(this).val());
+    $val2 = $(this).parent().siblings('td.proj_argument').children('input[name="proj_arg_max"]');
+
+    if ($val + 1 > parseInt($val2.val())) {
+      $val2.val($val + 1).change();
+    }
+  })
+  $(document).ready(function() {
+    var h = $(window).height();
+    $('section#popup').css({
+      'height': h
+    });
+
+    var date = new Date();
+    date = getFormatdate(date);
+    $('input#proj_date').attr('min', date);
+    $('input#proj_date').val(date);
+  })
+  $('input[name="taskfile_sel"]').on('change', function() {
+    $p = $(this).parents('tr');
+    // $p.toggleClass('checked');
+    if ($(this).prop('checked') == true) {
+      $p.addClass('checked');
+    } else {
+      $p.removeClass('checked');
+    }
+    $each = $('input[name="taskfile_sel"]');
+    $all = $('input#taskfile_sel_all');
+    var sel_cnt = $each.length;
+    if ($('input[name="taskfile_sel"]:checked').length == sel_cnt) {
+      $all.prop('checked', true);
+    } else {
+      $all.prop('checked', false);
+    }
+    if ($('input[name="taskfile_sel"]:checked').length == 0) {
+      $('button[name="pjfile_del"]').hide();
+    } else {
+      $('button[name="pjfile_del"]').show();
+    }
+  })
+
+  $('input#taskfile_sel_all').on('change', function() {
+    $each = $('input[name="taskfile_sel"]');
+    $p = $each.parents('tr');
+
+    var sel_cnt = $each.length;
+    if ($(this).is(':checked')) {
+      $each.prop('checked', true).change();
+      $('button[name="pjfile_del"]').show();
+    } else {
+      $each.prop('checked', false).change();
+      $('button[name="pjfile_del"]').hide();
+    }
+  })
+
+  $('button[name="nodata"]').on('click', function(e) {
+    e.preventDefault();
+    $('#proj_path_file').click();
+  })
+</script>
+<script>
+  // $('.dialoged').on('click', function() {
+  //   $('#exampleModal').modal('show')
+  // })
+  $('.dialoged').on('click', function() {
+    $('#input_section').show();
+  })
+  $('#close_input').on('click', function(){
+    $('#input_section').hide();
+  })
+
+</script>
 <script>
   const {appLocation} = require('../../../js/controller/ui/main/ui.main');
   appLocation.setDefine('appLocation', 'PROVIDER');

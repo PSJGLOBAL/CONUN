@@ -1,5 +1,7 @@
 const electron = require('electron');
 const {app} = electron;
+const ipcMain = electron.ipcMain;
+const { dialog } = require('electron');
 const {shell} = require('electron');
 const { createWindow, mainWindow } = require('./src/service/main.app');
 const P2PM = require('./src/service/main.p2p');
@@ -8,7 +10,8 @@ app.on('ready', () => {
     createWindow();
     console.log('App is Ready?');
     require('./src/service/main.channel');
-    P2PM.init().then(shell.beep());
+    P2PM.init()
+        .then(shell.beep());
 });
 
 // Quit when all windows are closed - (Not macOS - Darwin)
