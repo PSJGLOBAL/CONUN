@@ -11,38 +11,51 @@ const { eventHunter, EventSubscriber, dispatchEvent } = require('conun-ipc/middl
 const events = require('events');
 const emitter = new events.EventEmitter();
 const log = require('electron-log');
-const { ServiceEvent } = require('./main.hub')
+const { p2ptoMainChannel, mainToMainChannel } = require('./main.hub')
 
 
 //  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- GET FROM P2P TO MAIN START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-// todo get project list
-ServiceEvent.on('REQUESTER_PROJECT_CONTENT', async function (response) {
-        console.log('REQUESTER_PROJECT_CONTENT', response);
-        const db_resp = await DbHelper.checkNodeId(1);
-        response.provider_uid = db_resp.dataValues.wallet_address;
-        DbHelper.ProviderProjectListCreate({
-            project_status: response.project_status,
-            project_sequence: response.project_sequence,
-            project_name: response.project_name,
-            project_id: response.project_id,
-            project_description: response.project_description,
-            requester_uid:  response.requester_uid,
-            resource_type:  response.resource_type,
-            pay_type: response.pay_type,
-            credit:  response.credit,
-            start_date: response.start_date,
-            end_date: response.end_date,
-            total_tasks: response.total_tasks,
-            completed_tasks: response.completed_tasks,
-            task_created_date: response.task_created_date
+// p2p provider save project list db
+// TODO CHECK HERE NOT HANDLED PROJECT
+p2ptoMainChannel.on('REQUESTER_PROJECT_CONTENT',  function (response) {
+    console.log('SAVE TO DB LIST: ');
+    console.log(response);
+    DbHelper.checkNodeId(1)
+        .then(db_resp => {
+            response.provider_uid = db_resp.dataValues.wallet_address;
+            DbHelper.providerProjectListCreate({
+                project_status: response.project_status,
+                project_sequence: response.project_sequence,
+                project_name: response.project_name,
+                project_id: response.project_id,
+                project_description: response.project_description,
+                requester_uid:  response.requester_uid,
+                resource_type:  response.resource_type,
+                pay_type: response.pay_type,
+                credit:  response.credit,
+                start_date: response.start_date,
+                end_date: response.end_date,
+                total_tasks: response.total_tasks,
+                completed_tasks: response.completed_tasks,
+                task_created_date: response.task_created_date
+            })
         })
-        // p2pManager.takingProjectContent(response);
+        .then(()=> {
+            console.log('CALLBACK_UPDATE_PROVIDER_UI')
+            eventHunter.APPLICATION_CHANNEL_RES = {
+                event: 'CALLBACK_UPDATE_PROVIDER_UI',
+                value: null,
+            }
+        })
 })
 
 //  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- GET FROM P2P TO MAIN END -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 
 //  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- APPLICATION START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+// TODO select project content p2pManager.takingProjectContent(response);
+
 dispatchEvent.listener.on('APPLY_SETTINGS', async function (result) {
     let setting = await DbHelper.getSettingsByID(1);
     if(setting === null) {
@@ -178,7 +191,7 @@ dispatchEvent.listener.on('GET_WALLET_WITH_PK', function(response) {
 
 
 
-//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- DATABASE REQUEST START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- DATABASE START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 dispatchEvent.listener.on('GET_ACCOUNT_ADDR', async function (value) {
     console.log('GET_ACCOUNT_ADDR: ', value);
     const db_resp = await DbHelper.checkNodeId(value.id);
@@ -188,7 +201,35 @@ dispatchEvent.listener.on('GET_ACCOUNT_ADDR', async function (value) {
         value:  db_resp.dataValues,
     }
 });
-//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- DATABASE REQUEST END -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+dispatchEvent.listener.on('GET_ALL_PROJECT_LIST',function () {
+    DbHelper.findAllProviderProjectList()
+        .then(db_resp => {
+            console.log('GET_ALL_PROJECT_LIST: ', db_resp);
+            eventHunter.DATABASE_CHANNEL_RES = {
+                event: 'SET_ALL_PROJECT_LIST',
+                value:  db_resp,
+            }
+        })
+});
+
+dispatchEvent.listener.on('SET_UPDATE_PROJECT_ITEM', async function (value) {
+    // TODO make if project canceled
+    console.log('SET_UPDATE_PROJECT_ITEM: ', value);
+    const db_resp = await DbHelper.updateProjectByElement(value);
+    console.log('DB UPDATED RES: ', db_resp);
+    // eventHunter.DATABASE_CHANNEL_RES = {
+    //     event: 'GET_UPDATE_PROJECT_ITEM',
+    //     value:  db_resp,
+    // }
+});
+
+
+mainToMainChannel.on('QUIT_EVENT', function () {
+    DbHelper.providerProjectListDelete()
+})
+
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- DATABASE END -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 
 

@@ -1,44 +1,84 @@
 const Store = require('electron-store');
 const mainStore = new Store();
-
+const { eventHunter, dispatchEvent } = require('conun-ipc/middleware/renderer.event.hunter');
 
 var ProviderUIController = (function () {
 
     var DOMStrings = {
         setNetworkStatus: 'txt_network_status',
         setTxtNodeCount: 'txt_node_count',
-        providerListArea: '.provider_list_area'
+        providerListArea: '.provider_list_area',
+        divRefreshProject: 'resource_type-id',
+
+        // project detail list id
+        txtProjectName: 'project_name',
+        txtProjectId: 'project_id',
+        txtProjectStatus: 'project_status',
+        txtTotalTasks: 'total_tasks',
+        txtCompletedTasks: 'completed_tasks',
+        txtPayType: 'pay_type',
+        txtCredit: 'credit',
+        txtResourceType: 'resource_type',
+        txtRequesterUID: 'requester_uid',
+        txtStartDate: 'start_date',
+        txtEndDate: 'end_date',
+        txtProjectDescription: 'project_description',
+
+        btnSubmit: 'submit_btn',
+        btnClose: 'close_btn'
     };
 
     return {
         addReqListItem: function(type, obj) {
             var html, newHtml, element;
 
+            // console.log('addReqListItem: ', obj);
+
             if (type === 'add_provider_list') {
                 element = DOMStrings.providerListArea;
                 html =
-                    '                  <tr id="list-%id%">\n' +
-                    '                    <td title="Project Title">%txt_project_name%</td>\n' +
-                    '                    <td title="Task ID">%txt_task_id%</td>\n' +
-                    '                    <td title="File Hash">%txt_file_hash%</td>\n' +
-                    '                    <td title="Date: %txt_date%">%txt_end_date%</td>\n' +
-                    '                    <td id="task_status-id" title="Status" class="stat">%txt_status%</td>\n' +
-                    '                    <td id="task_tx_hash-id" title="Click to copy"><input type="readonly" onclick="copy(this);">%txt_tx_hash%</td>\n' +
+                    '                  <tr id="list-%id%" class="dialoged" >\n' +
+                    '                    <td id="project_name-id" title="Project Name">%project_name%</>\n' +
+                    '                    <td id="project_Id-id" title="Project ID">%project_Id%</>\n' +
+                    '                    <td id="credit-id" title="Credit">%credit%</>\n' +
+                    '                    <td id="resource_type-id" title="Resource">%resource_type%</>\n' +
+                    '                    <td id="date-id" title="%title_date%">%date%</>\n' +
+                    '                    <td id="project_status-id" title="Status" class="stat">%project_status%</>\n' +
                     '                  </tr>';
-                console.log('check provide:',  obj);
+                // console.log('check provide:',  obj);
                 newHtml = html.replace('%id%', obj.id);
-                newHtml = newHtml.replace('%txt_project_name%', obj.project_name);
-                newHtml = newHtml.replace('%txt_task_id%', obj.task_id);
-                newHtml = newHtml.replace('%txt_file_hash%', obj.file_hash);
-                newHtml = newHtml.replace('%txt_date%', obj.date.start_date + '~' + obj.date.end_date);
-                newHtml = newHtml.replace('%txt_end_date%', obj.date.end_date);
-                newHtml = newHtml.replace('%txt_status%', obj.status);
-                newHtml = newHtml.replace('task_status-id', 'task_status-' + obj.id);
-                newHtml = newHtml.replace('%txt_tx_hash%', obj.tx_hash);
-                newHtml = newHtml.replace('task_tx_hash-id', 'task_tx_hash-' + obj.id);
-                console.log(element, newHtml);
+                newHtml = newHtml.replace('project_name-id', 'project_name-' + obj.id);
+                newHtml = newHtml.replace('project_Id-id', 'project_Id-' + obj.id);
+                newHtml = newHtml.replace('credit-id', 'credit-' + obj.id);
+                newHtml = newHtml.replace('resource_type-id', 'resource_type-' + obj.id);
+                newHtml = newHtml.replace('date-id', 'date-' + obj.id);
+                newHtml = newHtml.replace('project_status-id', 'project_status-' +  obj.id);
+
+
+                newHtml = newHtml.replace('%project_name%', obj.project_name);
+                newHtml = newHtml.replace('%project_Id%', obj.project_id);
+                newHtml = newHtml.replace('%credit%', obj.credit);
+                newHtml = newHtml.replace('%resource_type%', obj.resource_type);
+                newHtml = newHtml.replace('%date%', obj.date);
+                newHtml = newHtml.replace('%title_date%', obj.date);
+                newHtml = newHtml.replace('%project_status%', obj.project_status);
                 document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
             }
+        },
+
+        addProjectDetail: function(obj) {
+            document.getElementById(DOMStrings.txtProjectName).innerHTML = obj.project_name,
+            document.getElementById(DOMStrings.txtProjectId).innerHTML = obj.project_id,
+            document.getElementById(DOMStrings.txtProjectStatus).innerHTML = obj.project_status,
+            document.getElementById(DOMStrings.txtTotalTasks).innerHTML = obj.total_tasks,
+            document.getElementById(DOMStrings.txtCompletedTasks).innerHTML = obj.completed_tasks,
+            document.getElementById(DOMStrings.txtPayType).innerHTML = obj.pay_type,
+            document.getElementById(DOMStrings.txtCredit).innerHTML = obj.credit,
+            document.getElementById(DOMStrings.txtResourceType).innerHTML = obj.resource_type,
+            document.getElementById(DOMStrings.txtRequesterUID).innerHTML = obj.requester_uid,
+            document.getElementById(DOMStrings.txtStartDate).innerHTML = obj.start_date,
+            document.getElementById(DOMStrings.txtEndDate).innerHTML = obj.end_date,
+            document.getElementById(DOMStrings.txtProjectDescription).innerHTML = obj.project_description
         },
 
         displayProvider: function() {
@@ -56,16 +96,124 @@ var ProviderUIController = (function () {
 
 var mainController = (function (ProvUICtrl) {
 
-    // update view if opened
-    var addProviderTaskList = function(object) {
+    function ProjectConstructor() {
+       this.selected_project_id = null;
+       this.project_status = null;
+    }
 
+    var project_constructor = new ProjectConstructor();
+
+    const projectListMap = new Map();
+
+    var setupEventListeners = function () {
+        $(document).on("click",".provider_list_area", function () {
+            providerProjectDetailList();
+        });
+
+        $('#close_btn').on('click', function() {
+            $('#input_section').hide();
+            $('.provider_list_area').empty();
+            projectListMap.clear();
+            providerProjectList();
+        })
+
+        $('#submit_btn').on('click', function() {
+            submitProject();
+            $('#input_section').hide();
+            $('.provider_list_area').empty();
+            projectListMap.clear();
+            providerProjectList();
+        })
+
+    }
+
+    // update screen if project received
+    dispatchEvent.listener.on('CALLBACK_UPDATE_PROVIDER_UI',function () {
+        console.log('CALLBACK_UPDATE_PROVIDER_UI');
+        $('.provider_list_area').empty();
+        projectListMap.clear();
+        providerProjectList();
+    })
+
+    const submitProject = function () {
+        if(project_constructor.project_status  !== 'SELECTED') {
+            eventHunter.DATABASE_CHANNEL_REQ = {
+                event: 'SET_UPDATE_PROJECT_ITEM',
+                value: {
+                    project_id: project_constructor.selected_project_id,
+                    project_status: 'SELECTED',
+                }
+            }
+        } else {
+            window.alert('Already Accepted')
+        }
+    }
+
+    const getProjectList = function () {
+        console.log('getProjectList');
+
+        eventHunter.DATABASE_CHANNEL_REQ = {
+            event: 'GET_ALL_PROJECT_LIST',
+            value: null
+        }
+
+        return eventHunter.DATABASE_CHANNEL_RES;
     };
 
+
+    // update view if opened
+    var providerProjectList = function() {
+        console.log('providerProjectList')
+        getProjectList()
+            .then( list => {
+                if(list.event === 'SET_ALL_PROJECT_LIST')
+                    list.value.forEach( function (table) {
+                        // console.log('GET ALL LIST: ', table.dataValues.id, table.dataValues);
+                        projectListMap.set(Number(table.dataValues.id), table.dataValues);
+                        ProvUICtrl.addReqListItem('add_provider_list', {
+                            id: table.dataValues.id,
+                            project_name: table.dataValues.project_name,
+                            project_id: table.dataValues.project_id,
+                            credit: table.dataValues.credit,
+                            resource_type: table.dataValues.resource_type,
+                            date: table.dataValues.start_date +'/'+ table.dataValues.end_date,
+                            project_status: table.dataValues.project_status
+                        })
+                    })
+            })
+    };
+
+    var providerProjectDetailList = function () {
+        $('#input_section').show();
+        let select_project_area_id = event.target.id;
+        let index = select_project_area_id.split("-");
+        // console.log('select_project: ', select_project_area_id, index[1]);
+
+        let detail_list = projectListMap.get(Number(index[1]));
+        // console.log('get detail_list: ', detail_list);
+        project_constructor.selected_project_id = detail_list.project_id;
+        project_constructor.project_status = detail_list.project_status;
+        ProvUICtrl.addProjectDetail({
+            project_name: detail_list.project_name,
+            project_id: detail_list.project_id,
+            project_status: detail_list.project_status,
+            total_tasks: detail_list.total_tasks,
+            pay_type: detail_list.pay_type,
+            credit: detail_list.credit,
+            resource_type: detail_list.resource_type,
+            requester_uid: detail_list.requester_uid,
+            start_date: detail_list.start_date,
+            end_date: detail_list.end_date,
+            project_description: detail_list.project_description,
+        });
+    }
 
     return {
         init: function () {
             console.log('PROVIDER');
-            ProvUICtrl.displayProvider();
+            dispatchEvent.init('APPLICATION_CHANNEL_RES');
+            setupEventListeners();
+            providerProjectList();
         }
     }
 

@@ -9,7 +9,7 @@ module.exports = {
             project_status: {
                 type: Sequelize.STRING,
                 allowNull: false,
-                unique: true
+                unique: false
             },
             project_sequence: {
                 type: Sequelize.INTEGER,
@@ -22,7 +22,7 @@ module.exports = {
             project_id: {
                 type: Sequelize.STRING,
                 allowNull: false,
-                unique: false
+                unique: true
             },
             project_description: {
                 type: Sequelize.STRING,

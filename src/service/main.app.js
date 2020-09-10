@@ -17,22 +17,6 @@ Menu.setApplicationMenu(false);
 const path = require('path');
 const url = require('url');
 
-const { createStore, applyMiddleware } = require('redux');
-const {
-    forwardToRenderer,
-    triggerAlias,
-    replayActionMain,
-    createAliasedAction,
-} = require('electron-redux');
-const {networkReduce} = require('../js/controller/app/event/_app.event.manager');
-
-const store = createStore(networkReduce, 0, applyMiddleware(triggerAlias, forwardToRenderer));
-
-replayActionMain(store);
-
-createAliasedAction('INCREMENT_ALIASED', () => ({ type: 'TAG_BALANCE' }));
-
-
 let mainWindow, mobileWindow,
     qrCodeChildWindow, addProjectWindow, tray, popUpChildWindow;
 

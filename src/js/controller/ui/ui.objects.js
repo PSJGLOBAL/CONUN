@@ -26,7 +26,8 @@ const ApplicationSession = {
 };
 
 
+
 module.exports = {
     ApplicationSession,
-    ApplicationStorage
+    ApplicationStorage,
 };

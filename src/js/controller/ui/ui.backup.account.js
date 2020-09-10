@@ -5,6 +5,7 @@ const { eventHunter } = require('conun-ipc/middleware/renderer.event.hunter');
 const {ApplicationStorage} = require('./ui.objects')
 const crypto = require('crypto');
 
+
 var AccountUIController = (function () {
 
     var DOMStrings = {

@@ -1,4 +1,4 @@
-# CONUN Electron Application
+# CONUN Manager Application
 ![Minimum Node Requirement](https://img.shields.io/badge/node-%3E%3D6.14.0-brightgreen.svg)
 ![NPM](https://img.shields.io/npm/v/npm)
 <br/>
@@ -125,19 +125,15 @@ npm run test:coverage //live
 <br/>
 
 ### :large_blue_diamond: Get free coin(CON & ETH) for your testing 
-* Link to get free CON Token from Ropsten Testnet. [Link](https://getcon.conun.io)<br>
-* Link to get free ETH from Ropsten Testnet. [Link](https://faucet.ropsten.be/)
+* Link to get free CON Token from Ropsten Testnet. [Click](https://getcon.conun.io)<br>
+* Link to get free ETH from Ropsten Testnet. [Click](https://faucet.ropsten.be/)
 <br/>
 <br/>
 
 ### :rocket: Release
-Download Links: [Link](https://github.com/CONUN-Global/CONUN/releases)
+Download Link: [Click](https://github.com/CONUN-Global/CONUN/releases)
 
 Released since 2020.04
 <br/>
 <br/>
 
-
-### :mailbox_with_mail: Contact
-* [Homepage](https://conun.io/)<br>
-* [Facebook](https://www.facebook.com/conunglobal/?modal=admin_todo_tour)

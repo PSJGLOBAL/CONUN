@@ -1,7 +1,7 @@
 const events = require('events');
-const ServiceEvent = new events.EventEmitter();
-
-
+const p2ptoMainChannel = new events.EventEmitter();
+const mainToMainChannel = new events.EventEmitter();
 module.exports = {
-    ServiceEvent,
+    p2ptoMainChannel,
+    mainToMainChannel
 }

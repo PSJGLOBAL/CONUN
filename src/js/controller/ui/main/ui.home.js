@@ -24,11 +24,13 @@ var homeUIController = (function () {
     return {
         displayWallet: function(object) {
             console.log('Home display >>', object);
-            if(object.connection) document.getElementById(DOMStrings.setNetworkStatus).innerHTML = object.connection;
-            // document.getElementById(DOMStrings.setTxtNodeCount).innerHTML = 'online_nodes';
-            if(object.wallet_address)document.getElementById(DOMStrings.seTextAccountAddr).value = object.wallet_address;
-            if(object.coin_con)document.getElementById(DOMStrings.setTextConunBalance).innerHTML = object.coin_con;
-            if(object.coin_eth)document.getElementById(DOMStrings.setTextEtherBalance).innerText = object.coin_eth;
+            if (object) {
+                if(object.connection) document.getElementById(DOMStrings.setNetworkStatus).innerHTML = object.connection;
+                // document.getElementById(DOMStrings.setTxtNodeCount).innerHTML = 'online_nodes';
+                if(object.wallet_address)document.getElementById(DOMStrings.seTextAccountAddr).value = object.wallet_address;
+                if(object.coin_con)document.getElementById(DOMStrings.setTextConunBalance).innerHTML = object.coin_con;
+                if(object.coin_eth)document.getElementById(DOMStrings.setTextEtherBalance).innerText = object.coin_eth;
+            }
         },
 
         displayProcessCount: function(object) {
@@ -93,20 +95,21 @@ var setController = (function (UICtrl, Serving) {
         });
     };
 
-    //update (subscribe to event updates)
     net_connection.on('CONNECTION_RES', UICtrl.displayWallet);
 
     return {
         //set (first view set)
         init: async function () {
             console.log('Home Application has started !');
-            UICtrl.displayWallet(JSON.parse(appContent.getDefine('P2P-CONNECTION_RES')))
+            //update (subscribe to event updates)
+            UICtrl.displayWallet(JSON.parse(appContent.getDefine('CONNECTION_RES')))
             let account = JSON.parse(ApplicationStorage.getModel('APP_WALLET_ADDR'))
             let balance = await Serving.walletBalanceService(account.wallet_address);
             await EventSubscriber( account, UICtrl.displayWallet);
             await EventSubscriber( balance.value, UICtrl.displayWallet);
 
             // TODO change to DB Mode
+
             if(!appLocation.checkDefine('GetStarted', true)) {
                 mainStore.set('window_state', 'main');
                 appLocation.setDefine('GetStarted', true);
@@ -114,7 +117,6 @@ var setController = (function (UICtrl, Serving) {
 
             UICtrl.displayProcessCount('object');
             setupEventListeners();
-
         }
     };
 })(homeUIController, serviceController);

@@ -83,8 +83,12 @@ module.exports = {
         });
     },
 
-    ProviderProjectListCreate: (object) => {
-        console.log('ProviderProjectListCreate: ', object);
+
+
+
+    // provider query start
+    providerProjectListCreate: (object) => {
+        console.log('providerProjectListCreate: ', object);
         return projectListModel.create (
             {
                 project_status: object.project_status,
@@ -112,4 +116,48 @@ module.exports = {
             });
     },
 
+    findAllProviderProjectList: () => {
+        return new Promise (
+            (resolve, reject) => {
+               const object = projectListModel.findAll();
+                if(object) {
+                    console.log("All Project List: ", object);
+                    resolve(object)
+                }
+                else {
+                    reject(object)
+                }
+        });
+    },
+
+
+    updateProjectByElement: (object) => {
+        return projectListModel.update (
+            {
+                project_status: object.project_status,
+            },
+            {where: {project_id: object.project_id}}
+        ).then( data => {
+            console.log("Settings updated", data.id);
+            return data
+        }).catch(error => {
+            console.log("Error: ", error);
+            return error
+        });
+    },
+
+
+    providerProjectListDelete: () => {
+        return projectListModel.destroy({where: { project_status: 'START' }})
+            .then( project => {
+                console.log("Project List deleted: ", project);
+                return true
+            }).catch( error => {
+                console.log("Could not delete List. Please try again! " + error);
+                return error
+            });
+    },
+
+    // provider query end
 }
+

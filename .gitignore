@@ -7,5 +7,3 @@ package-lock.json
 dist
 src/modules/
 *.nsh
-Installation
-sample

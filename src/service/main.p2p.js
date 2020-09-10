@@ -3,7 +3,7 @@ const p2pProcess = require('conun-p2p/p2p.processor');
 const p2pManager = require('conun-p2p/p2p.manager');
 const DbHelper = require('../../src/js/models/helper/module.sequelizer');
 const { eventHunter, EventSubscriber, dispatchEvent } = require('conun-ipc/middleware/main.event.hunter');
-const { ServiceEvent } = require('./main.hub')
+const { p2ptoMainChannel } = require('./main.hub')
 
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- P2P MANAGER START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -13,7 +13,7 @@ const { ServiceEvent } = require('./main.hub')
 p2pProcess.p2pProcess.on('message', (res) => {
     log.info('EVENT P2P_CHANNEL_RES >> :', res);
     // Send event for other main processors
-    ServiceEvent.emit(res.event, res.data);
+    p2ptoMainChannel.emit(res.event, res.data)
     // Send event for front controller processors
     eventHunter.P2P_CHANNEL_RES = {
         event: res.event,

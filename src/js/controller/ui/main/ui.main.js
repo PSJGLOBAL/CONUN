@@ -1,6 +1,6 @@
 const { dispatchEvent } = require('conun-ipc/middleware/renderer.event.hunter');
 const { Subscriber } = require('conun-ipc/middleware/process.subscriber');
-const {ApplicationStorage, ApplicationSession} = require('../ui.objects');
+const { ApplicationStorage, ApplicationSession } = require('../ui.objects');
 
 //check current position of application, check corrent view
 
@@ -36,10 +36,11 @@ var appContent = {
     }
 };
 
+
 dispatchEvent.listener.on('P2P-CONNECTION_RES',function (response) {
     console.log('connection:', response);
     //await EventSubscriber(await response, UICtrl.displayWallet );
-    appContent.setDefine('P2P-CONNECTION_RES', JSON.stringify(response))
+    appContent.setDefine('CONNECTION_RES', JSON.stringify(response))
     net_connection.execute(response);
     if(response.connection === 'Connection Failed') {
         console.log('Notification Failed');
@@ -50,10 +51,20 @@ dispatchEvent.listener.on('P2P-CONNECTION_RES',function (response) {
 });
 
 
+//  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- REQUESTER CODE START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    //TODO
+//  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- REQUESTER CODE END   -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
+//  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- PROVIDER CODE START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
+
+
+//  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- PROVIDER CODE END -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 const net_connection = new Subscriber('CONNECTION_RES');
 dispatchEvent.init('P2P_CHANNEL_RES');
-
 
 module.exports = {
     appLocation,
