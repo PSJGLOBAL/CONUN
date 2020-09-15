@@ -44,7 +44,7 @@ module.exports = {
             },
             provider_uid: {
                 type: Sequelize.STRING,
-                allowNull: false,
+                allowNull: true,
                 unique: false
             },
             value: {
@@ -78,7 +78,7 @@ module.exports = {
                 allowNull: false,
                 unique: false
             },
-            process_id: {
+            process_loca: {
                 type: Sequelize.STRING,
                 allowNull: false,
                 unique: true

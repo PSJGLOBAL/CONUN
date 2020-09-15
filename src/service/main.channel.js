@@ -16,12 +16,12 @@ const { p2ptoMainChannel, mainToMainChannel } = require('./main.hub')
 
 //  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- GET FROM P2P TO MAIN START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 // p2p provider save project list db
-// TODO CHECK HERE NOT HANDLED PROJECT
+
+//tag: provider
 p2ptoMainChannel.on('REQUESTER_PROJECT_CONTENT',  function (response) {
-    console.log('SAVE TO DB LIST: ');
-    console.log(response);
+    log.info('SAVE TO DB LIST: ', response);
     DbHelper.checkNodeId(1)
-        .then(db_resp => {
+        .then( db_resp => {
             response.provider_uid = db_resp.dataValues.wallet_address;
             DbHelper.providerProjectListCreate({
                 project_status: response.project_status,
@@ -49,13 +49,17 @@ p2ptoMainChannel.on('REQUESTER_PROJECT_CONTENT',  function (response) {
         })
 })
 
+//tag: requester
+p2ptoMainChannel.on('PROVIDER_SELECTED_CONTENT', function (response) {
+    log.info('PROVIDER_SELECTED_CONTENT: ', response);
+})
 //  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- GET FROM P2P TO MAIN END -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 
 //  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- APPLICATION START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 // TODO select project content p2pManager.takingProjectContent(response);
-
+//tag: default
 dispatchEvent.listener.on('APPLY_SETTINGS', async function (result) {
     let setting = await DbHelper.getSettingsByID(1);
     if(setting === null) {
@@ -193,9 +197,9 @@ dispatchEvent.listener.on('GET_WALLET_WITH_PK', function(response) {
 
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- DATABASE START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 dispatchEvent.listener.on('GET_ACCOUNT_ADDR', async function (value) {
-    console.log('GET_ACCOUNT_ADDR: ', value);
+    // console.log('GET_ACCOUNT_ADDR: ', value);
     const db_resp = await DbHelper.checkNodeId(value.id);
-    console.log('resp_node: ', db_resp);
+    // console.log('resp_node: ', db_resp);
     eventHunter.DATABASE_CHANNEL_RES = {
         event: 'SET_ACCOUNT_ADDR',
         value:  db_resp.dataValues,
@@ -205,7 +209,7 @@ dispatchEvent.listener.on('GET_ACCOUNT_ADDR', async function (value) {
 dispatchEvent.listener.on('GET_ALL_PROJECT_LIST',function () {
     DbHelper.findAllProviderProjectList()
         .then(db_resp => {
-            console.log('GET_ALL_PROJECT_LIST: ', db_resp);
+            // console.log('GET_ALL_PROJECT_LIST: ', db_resp);
             eventHunter.DATABASE_CHANNEL_RES = {
                 event: 'SET_ALL_PROJECT_LIST',
                 value:  db_resp,
@@ -213,16 +217,6 @@ dispatchEvent.listener.on('GET_ALL_PROJECT_LIST',function () {
         })
 });
 
-dispatchEvent.listener.on('SET_UPDATE_PROJECT_ITEM', async function (value) {
-    // TODO make if project canceled
-    console.log('SET_UPDATE_PROJECT_ITEM: ', value);
-    const db_resp = await DbHelper.updateProjectByElement(value);
-    console.log('DB UPDATED RES: ', db_resp);
-    // eventHunter.DATABASE_CHANNEL_RES = {
-    //     event: 'GET_UPDATE_PROJECT_ITEM',
-    //     value:  db_resp,
-    // }
-});
 
 
 mainToMainChannel.on('QUIT_EVENT', function () {

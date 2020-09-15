@@ -1,7 +1,7 @@
 const Store = require('electron-store');
 const mainStore = new Store();
 const { eventHunter, dispatchEvent } = require('conun-ipc/middleware/renderer.event.hunter');
-
+const {ApplicationStorage} = require('../ui.objects')
 var ProviderUIController = (function () {
 
     var DOMStrings = {
@@ -94,16 +94,19 @@ var ProviderUIController = (function () {
 })();
 
 
+
 var mainController = (function (ProvUICtrl) {
 
     function ProjectConstructor() {
        this.selected_project_id = null;
        this.project_status = null;
+       this.projectListMap = new Map();
+       this.project = null;
     }
 
+    // const projectListMap = new Map();
     var project_constructor = new ProjectConstructor();
 
-    const projectListMap = new Map();
 
     var setupEventListeners = function () {
         $(document).on("click",".provider_list_area", function () {
@@ -113,7 +116,7 @@ var mainController = (function (ProvUICtrl) {
         $('#close_btn').on('click', function() {
             $('#input_section').hide();
             $('.provider_list_area').empty();
-            projectListMap.clear();
+            project_constructor.projectListMap.clear();
             providerProjectList();
         })
 
@@ -121,7 +124,7 @@ var mainController = (function (ProvUICtrl) {
             submitProject();
             $('#input_section').hide();
             $('.provider_list_area').empty();
-            projectListMap.clear();
+            project_constructor.projectListMap.clear();
             providerProjectList();
         })
 
@@ -131,17 +134,24 @@ var mainController = (function (ProvUICtrl) {
     dispatchEvent.listener.on('CALLBACK_UPDATE_PROVIDER_UI',function () {
         console.log('CALLBACK_UPDATE_PROVIDER_UI');
         $('.provider_list_area').empty();
-        projectListMap.clear();
+        project_constructor.projectListMap.clear();
         providerProjectList();
     })
 
     const submitProject = function () {
         if(project_constructor.project_status  !== 'SELECTED') {
-            eventHunter.DATABASE_CHANNEL_REQ = {
-                event: 'SET_UPDATE_PROJECT_ITEM',
+            console.log('submitProject');
+            project_constructor.project.event = 'PROVIDER_SELECTED_CONTENT';
+            let object = JSON.parse(ApplicationStorage.getModel('APP_WALLET_ADDR'));
+            console.log('APP_WALLET_ADDR: ', object);
+            project_constructor.project.provider_uid = object.wallet_address;
+            delete project_constructor.project.id;
+            eventHunter.P2P_CHANNEL_REQ = {
+                event: 'PROVIDER_SELECTED_CONTENT',
                 value: {
                     project_id: project_constructor.selected_project_id,
                     project_status: 'SELECTED',
+                    project: project_constructor.project
                 }
             }
         } else {
@@ -169,7 +179,8 @@ var mainController = (function (ProvUICtrl) {
                 if(list.event === 'SET_ALL_PROJECT_LIST')
                     list.value.forEach( function (table) {
                         // console.log('GET ALL LIST: ', table.dataValues.id, table.dataValues);
-                        projectListMap.set(Number(table.dataValues.id), table.dataValues);
+                        project_constructor.projectListMap.set(Number(table.dataValues.id), table.dataValues);
+                        project_constructor.project = table.dataValues;
                         ProvUICtrl.addReqListItem('add_provider_list', {
                             id: table.dataValues.id,
                             project_name: table.dataValues.project_name,
@@ -187,13 +198,13 @@ var mainController = (function (ProvUICtrl) {
         $('#input_section').show();
         let select_project_area_id = event.target.id;
         let index = select_project_area_id.split("-");
-        // console.log('select_project: ', select_project_area_id, index[1]);
+        console.log('select_project: ', select_project_area_id, index[1]);
 
-        let detail_list = projectListMap.get(Number(index[1]));
+        let detail_list = project_constructor.projectListMap.get(Number(index[1]));
         // console.log('get detail_list: ', detail_list);
         project_constructor.selected_project_id = detail_list.project_id;
         project_constructor.project_status = detail_list.project_status;
-        ProvUICtrl.addProjectDetail({
+        ProvUICtrl.addProjectDetail ({
             project_name: detail_list.project_name,
             project_id: detail_list.project_id,
             project_status: detail_list.project_status,

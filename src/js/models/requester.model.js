@@ -6,12 +6,7 @@ module.exports = {
                 primaryKey: true,
                 autoIncrement: true
             },
-            message_type: {
-                type: Sequelize.STRING,
-                allowNull: false,
-                unique: false
-            },
-            command_tag: {
+            project_status: {
                 type: Sequelize.STRING,
                 allowNull: false,
                 unique: false
@@ -19,12 +14,7 @@ module.exports = {
             project_sequence: {
                 type: Sequelize.INTEGER,
             },
-            project_flag: {
-                type: Sequelize.STRING,
-                allowNull: false,
-                unique: false
-            },
-            requester_guid: {
+            requester_uid: {
                 type: Sequelize.STRING,
                 allowNull: false,
                 unique: false
@@ -50,22 +40,22 @@ module.exports = {
             end_date: {
                 type: Sequelize.DATE
             },
-            credit: {
-                type: Sequelize.STRING,
-                allowNull: false,
-            },
             pay_type: {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
-            resource_mode: {
+            credit: {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
-            total_task_num: {
+            resource_type: {
+                type: Sequelize.STRING,
+                allowNull: false,
+            },
+            total_tasks: {
                 type: Sequelize.INTEGER,
             },
-            done_task_num: {
+            completed_tasks: {
                 type: Sequelize.INTEGER,
             },
             task_model: {

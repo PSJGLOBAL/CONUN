@@ -93,7 +93,6 @@ var mainController = (function (ReqUICtrl) {
                 eventHunter.P2P_CHANNEL_REQ = {
                     event: 'P2P-UPLOAD-PROJECT',
                     value: JSON.parse(data)
-
                 }
             } catch(e) {
                 console.log('Error:', e.stack);
@@ -108,11 +107,10 @@ var mainController = (function (ReqUICtrl) {
         evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
     }
 
-
     var ctrlAddItem = async function () {
         let set_path = await AddProjectPath();
         console.log('files: ', typeof set_path, set_path);
-        set_path.forEach(function (file, index) {
+        set_path.forEach(function (file) {
             try {
                 let data = fs.readFileSync(file.project_path, 'utf8');
                 console.log('data: ', JSON.parse(data))

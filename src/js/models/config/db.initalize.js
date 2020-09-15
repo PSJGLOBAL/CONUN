@@ -35,16 +35,14 @@ const projectListModel = projectListSchema(sequelize, Sequelize);
 
 
 sequelize.sync({ force: false })
-    .then(() => {
-        try {
-            console.log(`Database started`)
-        } catch (e) {
-            console.log(`Database error` + e)
-        }
-    });
+.then(() => {
+    try {
+        console.log(`Database started`)
+    } catch (e) {
+        console.log(`Database error` + e)
+    }
+});
 
-
-projectModel.belongsTo(nodeModel);
 
 taskInfoModel.belongsTo(projectModel);
 taskListModel.belongsTo(taskInfoModel);
