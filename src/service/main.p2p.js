@@ -1,3 +1,4 @@
+const { dialog } = require('electron')
 const log = require('electron-log');
 const p2pProcess = require('conun-p2p/p2p.processor');
 const p2pManager = require('conun-p2p/p2p.manager');
@@ -24,17 +25,31 @@ p2pProcess.p2pProcess.on('message', (res) => {
 //tag:  requester
 dispatchEvent.listener.on('P2P-UPLOAD-PROJECT',function (response) {
     log.info('P2P-UPLOAD-PROJECT: ', response);
-    DbHelper.checkNodeId(1)
-        .then(resp => {
-            response.requester_uid = resp.dataValues.wallet_address;
-            log.info('db_resp: ', response.requester_uid);
+    if(p2pManager.appMode !== 'REQUESTER') {
 
-            DbHelper.requesterProjectCreate(response)
-                .then( resp => {
-                    console.log('DATA BASE SAVED: ', resp);
-                    p2pManager.publishProjectContent(response);
-        })
-    })
+        const options = {
+            type: 'question',
+            buttons: ['OK'],
+            defaultId: 2,
+            title: `CONUN MANAGER MODE`,
+            message: `Sorry we could not upload project because, current mode is not Requester`,
+            detail: `Please open manager setting and change to requester mode`
+        };
+
+        dialog.showMessageBox(null, options, () => {});
+    } else {
+        DbHelper.checkNodeId(1)
+            .then(resp => {
+                response.requester_uid = resp.dataValues.wallet_address;
+                log.info('db_resp: ', response.requester_uid);
+                DbHelper.requesterProjectCreate(response)
+                    .then(() => {
+                        p2pManager.publishProjectContent(response);
+                    }).catch(() => {
+                    dialog.showErrorBox('Error During Upload', 'This project has already been created before, please check it before uploading.')
+                })
+            })
+    }
 })
 
 //tag: provider
@@ -51,16 +66,16 @@ dispatchEvent.listener.on('PROVIDER_SELECTED_CONTENT',function (response) {
 
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 module.exports = {
-    init: async () => {
+    init: () => {
         p2pManager.init();
         dispatchEvent.init('P2P_CHANNEL_REQ')
-        // TODO Check Manager app if new user (ERROR Here)
-        // After changing user mode, application cant updated user mode status
-        let setting =  await DbHelper.getSettingsByID(1);
-        if(setting) {
-            p2pManager.appMode = JSON.parse(setting.dataValues.user_mode);
-            console.log('Setting Mode: ', p2pManager.appMode )
-        }
+        DbHelper.getSettingsByID(1)
+            .then(setting => {
+                p2pManager.appMode = JSON.parse(setting.dataValues.user_mode);
+                console.log('Setting Mode: ', p2pManager.appMode )
+            }).catch(err => {
+                throw err
+        })
     }
 }
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

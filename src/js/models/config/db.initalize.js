@@ -33,7 +33,6 @@ const osResourceModel = osResourceSchema(sequelize, Sequelize);
 // Provider Model
 const projectListModel = projectListSchema(sequelize, Sequelize);
 
-
 sequelize.sync({ force: false })
 .then(() => {
     try {

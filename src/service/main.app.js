@@ -148,6 +148,7 @@ function MobileWindow() {
 
 function MainWindow() {
     console.log('Main Window Frame Started');
+
     mainWindow = new BrowserWindow({
 
         width: 1024, height: 780,
@@ -167,6 +168,12 @@ function MainWindow() {
     // Open DevTools - Remove for PRODUCTION!
     mainWindow.webContents.openDevTools();
     // Listen for window being closed
+
+    // todo always on mode
+    // mainWindow.setAlwaysOnTop(true, "floating");
+    // mainWindow.setVisibleOnAllWorkspaces(true);
+    // mainWindow.setFullScreenable(false);
+
     mainWindow.on('closed',  () => {
         mainWindow = null
     })

@@ -11,7 +11,8 @@ app.on('ready', () => {
     createWindow();
     console.log('App is Ready?');
     require('./src/service/main.channel');
-    P2PM.init().then(shell.beep());
+    P2PM.init();
+    shell.beep();
 });
 
 app.on('before-quit', e => {

@@ -52,52 +52,62 @@ p2ptoMainChannel.on('REQUESTER_PROJECT_CONTENT',  function (response) {
 //tag: requester
 p2ptoMainChannel.on('PROVIDER_SELECTED_CONTENT', function (response) {
     log.info('PROVIDER_SELECTED_CONTENT: ', response);
+    // todo 1. handle project id
+        // parse
+    // todo 2. make request project
+        // makeReqTaskInfo
+    // todo 3. send project
+        // p2p publishing
 })
 //  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- GET FROM P2P TO MAIN END -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 
 //  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- APPLICATION START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-// TODO select project content p2pManager.takingProjectContent(response);
 //tag: default
-dispatchEvent.listener.on('APPLY_SETTINGS', async function (result) {
-    let setting = await DbHelper.getSettingsByID(1);
-    if(setting === null) {
-        const db_status = await DbHelper.createSettings({
-            current_language: result.current_language,
-            resource_control: JSON.stringify(result.resource_control),
-            user_mode: JSON.stringify(result.user_mode),
-            path: JSON.stringify(result.path),
-            is_active: result.is_active
-        })
-        console.log('db_status: ', db_status);
-        if(db_status) {
-            let setting = await DbHelper.getSettingsByID(1);
-            eventHunter.APPLICATION_CHANNEL_RES = {
-                event: 'UPDATE_SETTINGS',
-                value:  setting.dataValues,
-            }
+dispatchEvent.listener.on('APPLY_SETTINGS',function(result) {
+    DbHelper.getSettingsByID(1).then(setting => {
+        console.log('APPLY_SETTINGS: ', setting);
+        if(setting === null) {
+            DbHelper.createSettings({
+                current_language: result.current_language,
+                resource_control: JSON.stringify(result.resource_control),
+                user_mode: JSON.stringify(result.user_mode),
+                path: JSON.stringify(result.path),
+                is_active: result.is_active
+            }).then(db_status => {
+                console.log('db_status: ', db_status);
+                DbHelper.getSettingsByID(1).then(setting => {
+                    p2pManager.appMode = result.user_mode;
+                    console.log('Get appMode', p2pManager.appMode)
+                    eventHunter.APPLICATION_CHANNEL_RES = {
+                        event: 'UPDATE_SETTINGS',
+                        value:  setting.dataValues,
+                    }
+                })
+            })
+        } else {
+            DbHelper.updateSettingsByElement({
+                id: 1,
+                current_language: result.current_language,
+                resource_control: JSON.stringify(result.resource_control),
+                user_mode: JSON.stringify(result.user_mode),
+                path: JSON.stringify(result.path),
+                is_active: result.is_active
+            }).then( db_status => {
+                console.log('db_status: ', db_status);
+                DbHelper.getSettingsByID(1).then(setting => {
+                    log.info('DB SAVED APP MODE: ', result.user_mode);
+                    p2pManager.appMode = result.user_mode;
+                    console.log('Get appMode', p2pManager.appMode)
+                    eventHunter.APPLICATION_CHANNEL_RES = {
+                        event: 'UPDATE_SETTINGS',
+                        value:  setting.dataValues,
+                    }
+                })
+            })
         }
-    } else {
-        const db_status = await DbHelper.updateSettingsByElement({
-            id: 1,
-            current_language: result.current_language,
-            resource_control: JSON.stringify(result.resource_control),
-            user_mode: JSON.stringify(result.user_mode),
-            path: JSON.stringify(result.path),
-            is_active: result.is_active
-        })
-        console.log('db_status: ', db_status);
-        if(db_status) {
-            let setting = await DbHelper.getSettingsByID(1);
-            eventHunter.APPLICATION_CHANNEL_RES = {
-                event: 'UPDATE_SETTINGS',
-                value:  setting.dataValues,
-            }
-        }
-    }
-    log.info('DB SAVED APP MODE: ', JSON.stringify(result.user_mode));
-    p2pManager.appMode = JSON.stringify(result.user_mode);
+    })
 })
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- APPLICATION END -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -116,14 +126,14 @@ web3Handlers.web3Event.on('res-web3-event',async function (result) {
             ipcDispatcher.RES_CREATE_WALLET = result;
     }
 
-    if(result.CMD === 'RES_CHECK_BALANCE_OF') {
+    else if(result.CMD === 'RES_CHECK_BALANCE_OF') {
             eventHunter.WEB3_CHANNEL_RES = {
                 event: 'SET_WALLET_BALANCE',
                 value: {coin_con: result.data.coin_con, coin_eth: result.data.coin_eth},
             }
     }
 
-    if(result.CMD === 'IMPORT_JSON_KEYSTORE_RES') {
+    else if(result.CMD === 'IMPORT_JSON_KEYSTORE_RES') {
         console.log('IMPORT_JSON_KEYSTORE_RES: ', result);
         if(result.data['wallet_address']) {
             let db_status = await DbHelper.accountCreate({
@@ -145,7 +155,7 @@ web3Handlers.web3Event.on('res-web3-event',async function (result) {
         }
     }
 
-    if(result.CMD === 'IMPORT_PRIVATE_KEY_RES') {
+    else if(result.CMD === 'IMPORT_PRIVATE_KEY_RES') {
         console.log('IMPORT_PRIVATE_KEY_RES: ', result);
         if(result.data['wallet_address']) {
             let db_status = await DbHelper.accountCreate({

@@ -2,6 +2,7 @@ const Store = require('electron-store');
 const mainStore = new Store();
 const { eventHunter, dispatchEvent } = require('conun-ipc/middleware/renderer.event.hunter');
 const {ApplicationStorage} = require('../ui.objects')
+
 var ProviderUIController = (function () {
 
     var DOMStrings = {
@@ -127,7 +128,6 @@ var mainController = (function (ProvUICtrl) {
             project_constructor.projectListMap.clear();
             providerProjectList();
         })
-
     }
 
     // update screen if project received
@@ -204,7 +204,7 @@ var mainController = (function (ProvUICtrl) {
         // console.log('get detail_list: ', detail_list);
         project_constructor.selected_project_id = detail_list.project_id;
         project_constructor.project_status = detail_list.project_status;
-        ProvUICtrl.addProjectDetail ({
+        ProvUICtrl.addProjectDetail({
             project_name: detail_list.project_name,
             project_id: detail_list.project_id,
             project_status: detail_list.project_status,

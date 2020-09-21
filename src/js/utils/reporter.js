@@ -39,7 +39,7 @@ const sendUncaughtException = error => {
 };
 
 function LogReporter(message) {
-    let {appLocation} = require('../controller/ui/main/_ui.main');
+    let {appLocation} = require('../controller/ui/main/ui.main');
     let node_uid = mainStore.get('node_uid');
     const { productName, companyName } = config;
     request.post(host + '/api/v1/log', {
