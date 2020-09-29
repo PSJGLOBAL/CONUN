@@ -11,7 +11,7 @@ const { eventHunter, EventSubscriber, dispatchEvent } = require('conun-ipc/middl
 const events = require('events');
 const emitter = new events.EventEmitter();
 const log = require('electron-log');
-const { p2ptoMainChannel, mainToMainChannel } = require('./main.hub')
+const { p2ptoMainChannel, mainToMainChannel } = require('./main.hub');
 
 
 //  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- GET FROM P2P TO MAIN START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -53,7 +53,21 @@ p2ptoMainChannel.on('REQUESTER_PROJECT_CONTENT',  function (response) {
 p2ptoMainChannel.on('PROVIDER_SELECTED_CONTENT', function (response) {
     log.info('PROVIDER_SELECTED_CONTENT: ', response);
     // todo 1. handle project id
-        // parse
+    DbHelper.requesterUpdateUID({
+        project_id: response.project_id,
+        provider_uid: response.provider_uid,
+        status: 'SELECTED'
+    }).then( selected_id => {
+        console.log('selected task_list: ', selected_id);
+        DbHelper.getSelectedProjectById({
+            project_id: response.project_id,
+            os: response.os
+        })
+        .then( project_details => {
+            console.log('project_details: ', project_details);
+        });
+    })
+
     // todo 2. make request project
         // makeReqTaskInfo
     // todo 3. send project
@@ -67,7 +81,7 @@ p2ptoMainChannel.on('PROVIDER_SELECTED_CONTENT', function (response) {
 //tag: default
 dispatchEvent.listener.on('APPLY_SETTINGS',function(result) {
     DbHelper.getSettingsByID(1).then(setting => {
-        console.log('APPLY_SETTINGS: ', setting);
+        console.log('APPLY_SETTINGS ', setting);
         if(setting === null) {
             DbHelper.createSettings({
                 current_language: result.current_language,

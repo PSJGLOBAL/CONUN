@@ -8,9 +8,6 @@ const { p2ptoMainChannel } = require('./main.hub')
 
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- P2P MANAGER START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-// p2p => front
-// p2p => main
-
 p2pProcess.p2pProcess.on('message', (res) => {
     log.info('EVENT P2P_CHANNEL_RES >> :', res);
     // Send event for other main processors
@@ -41,9 +38,9 @@ dispatchEvent.listener.on('P2P-UPLOAD-PROJECT',function (response) {
         DbHelper.checkNodeId(1)
             .then(resp => {
                 response.requester_uid = resp.dataValues.wallet_address;
-                log.info('db_resp: ', response.requester_uid);
                 DbHelper.requesterProjectCreate(response)
                     .then(() => {
+                        log.info('P2P upload  ufter db save', response);
                         p2pManager.publishProjectContent(response);
                     }).catch(() => {
                     dialog.showErrorBox('Error During Upload', 'This project has already been created before, please check it before uploading.')
@@ -58,6 +55,7 @@ dispatchEvent.listener.on('PROVIDER_SELECTED_CONTENT',function (response) {
     log.info(response);
     DbHelper.updateProjectByElement(response)
         .then(() => {
+            response.project.os = process.platform;
             p2pManager.selectProjectContent(response.project);
     })
 })

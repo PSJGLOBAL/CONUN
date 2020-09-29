@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+    <meta charset="utf-8" name="viewport" content="width=device-width, height=device-height, user-scalable=yes">
+    <!-- css & js -->
+    <link rel="stylesheet" href="../../css/common.css"/>
+    <link href="../../vendor/js/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+<!--     <link rel="stylesheet" href="../../css/media.css"/> -->
+    <!-- title -->
+    <title>CONUN Manager</title>
+  </head>
+  <body>
+    <section id="popup" class="addproj">
+      <p class="title"><img src="../../img/icon/ico_add_folder.svg" style="vertical-align:-2px;">&nbsp;Add a Project</p>
+      <form id="addproject" class="flex_flow">
+        <div class="wrap half">
+          <input type="text" name="proj_name" id="proj_name" placeholder="Enter Project Name" class="sub full" required>
+          <label for="proj_name">Project Name</label>
+        </div>
+        <div class="wrap half">
+          <select class="sub" name="proj_type" id="proj_type">
+            <option value="0">One Program, One Argument</option>
+            <option value="1">One Program, Multi Argument</option>
+            <option value="2">Multi Program, One Argument</option>
+            <option value="3" selected>Multi Program, Multi Argument</option>
+          </select>
+          <label for="proj_name">Project Type</label>
+        </div>
+        <div class="wrap">
+          <textarea class="sub" id="txt_project_description" name="proj_description" rows="8" cols="80" placeholder="Enter Project Description"></textarea>
+          <label for="proj_name">Project Description (Optional)</label>
+        </div>
+
+        <div class="wrap half">
+          <input type="date" name="proj_date" id="proj_date" class="sub full">
+          <label for="proj_date">End Date (Optional)</label>
+          <input type="time" name="proj_time" id="proj_time" class="sub full" step="2" value="00:00:00">
+            <div id="argument_view_id">
+                <label class="myLabel0" for="proj_argument_id">Argument Setting</label>
+                <input type="number" name="proj_argument" id="proj_argument_id" value="0" min="1" step="any" class="sub full" required>
+                <button type="button" class="add__btn" id="add_argument_btn"><i class="ion-ios-plus-outline"></i></button>
+            </div>
+
+
+            <div id="one_argument_id">
+                <label class="myLabel1">One Argument Settings</label>
+                <table class="clears0 sub">
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td class="proj_argument">
+                            <button type="button" name="argument_control" onclick="this.parentNode.querySelector('.proj_argument').stepDown()">-</button>
+                            <input type="number" class="proj_argument" name="proj_arg_min" id="arg_min_FILE_HASH" min="0" max="100" value="5">
+                            <button type="button" name="argument_control" onclick="this.parentNode.querySelector('.proj_argument').stepUp()">+</button>
+                        </td>
+                        <td class="proj_argument">
+                            <button type="button" name="argument_control" onclick="this.parentNode.querySelector('.proj_argument').stepDown()">-</button>
+                            <input type="number" class="proj_argument" name="proj_arg_max" id="arg_max_FILE_HASH" min="0" max="100" value="10">
+                            <button type="button" name="argument_control" onclick="this.parentNode.querySelector('.proj_argument').stepUp()">+</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="wrap half">
+          <select class="sub" name="proj_coin" id="proj_coin">
+            <option value="1" selected>CONUN (CON)</option>
+          </select>
+          <label for="proj_coin">Project Price</label>
+          <input type="number" name="proj_price" id="proj_price" value="0.0001" min="0" step="any" class="sub full" required>
+
+            <div id="multi_argument_list_id">
+                <label class="myLabel1">Multi Argument Settings</label>
+                <div  class="multi_argument_list scroll_multi_argument">
+                <!--                    -->
+                </div>
+            </div>
+
+        </div>
+
+        <div class="wrap flex">
+          <div>
+            <table class="clear sub" cellpadding="0" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>
+                    <input type="checkbox" name="taskfile_sel_all" id="taskfile_sel_all">
+                    <label for="taskfile_sel_all" class="checkbox"><span></span></label>
+                  </th>
+                  <th>File Hash</th><th>File Path</th><th>Argument (Min, Max)</th>
+                </tr>
+              </thead>
+            </table>
+            <label>Project Path
+              <!--
+                if u click "Add Project Files" button,
+                file select window opens now.
+                the next screen "upload" is at ../popup/upload_project.html
+                connect it after file is uploaded.
+              -->
+              <input type="file" multiple="multiple" name="proj_path_[]" id="proj_path_file">
+              <!-- <button type="button" name="nodata" class="clear" ><img src="../../img/icon/ico_attach_10.svg" alt="">&nbsp;Add Project Files</button> -->
+            </label>
+            <div class="list_add_project">
+            <!-- if file is not added, display this <div> -->
+              <!-- <div class="nodata flex">
+                <button type="button" name="nodata" class="clear"><img src="../../img/icon/ico_attach.svg" alt="">&nbsp;Add Project Files</button>
+              </div> -->
+            </div>
+          </div>
+          <div class="flex">
+            <button type="button" name="nodata" class="add_project_path form thin" style="margin-top:0;margin-bottom:10px;"><img src="../../img/icon/ico_attach.svg" alt="">&nbsp;Add Files</button>
+            <button type="button" name="add_project" class="btn_submit_project form fill">Submit</button>
+            <button type="button" name="cancel_project" onclick="window.close()" class="form thin">Cancel</button>
+          </div>
+          <button type="button" name="pjfile_del" class="clear" onclick="openPopup('yn', 'Are you sure to Delete selected Project Files?', 300, 240, '', '')"><img src="../../img/icon/ico_trash.svg" alt="delete" title="delete"> Delete Selected Files</button>
+        </div>
+      </form>
+    </section>
+    <script src="../../vendor/js/jquery-3.4.1.min.js"></script>
+    <script type="application/javascript">
+      if (typeof module === 'object' && typeof module.exports !== 'undefined') {
+        window.$ = window.jQuery = module.exports;
+      }
+    </script>
+    <script type="text/javascript" src="../../vendor/js/common.js"></script>
+    <script type="text/javascript">
+      require('../../../js/controller/ui/add/ui.add.project');
+      const {appLocation}= require('../../../js/controller/ui/main/_ui.main');
+      appLocation.setDefine('appLocation', 'ADD_PROJECT');
+    </script>
+  </body>
+</html>

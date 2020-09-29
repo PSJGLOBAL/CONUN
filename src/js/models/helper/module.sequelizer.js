@@ -1,6 +1,6 @@
 const {taskListSchema} = require("../task.model");
 const { nodeModel, projectModel, taskInfoModel, taskListModel,
-    osResourceModel, settingsModel, projectListModel } = require('../config/db.initalize');
+    osResourceModel, settingsModel, projectListModel, dataServerModel } = require('../config/db.initalize');
 module.exports = {
     accountCreate: (object) => {
         console.log('accountCreate: ', object);
@@ -81,7 +81,7 @@ module.exports = {
     },
 
     getSettingsByID: (id) => {
-        return new Promise(
+        return new Promise (
             ((resolve, reject) => {
                 settingsModel.findByPk(id)
                     .then(data => {
@@ -119,6 +119,19 @@ module.exports = {
                     task_created_date: object.task_created_date
                 })
                 .then( project_content => {
+
+                    dataServerModel.create({
+                        ip: object.data_server_info.ip,
+                        port: object.data_server_info.port,
+                        account: object.data_server_info.account,
+                        password: object.data_server_info.password,
+                        projectModelId: project_content.id
+                    }).then(data_server  => {
+                        console.log('>> data_server: ', data_server)
+                    }).catch(err => {
+                        reject(false);
+                    })
+
                     taskInfoModel.create({
                         task_id: object.task_info.task_id,
                         task_process_count: object.task_info.task_process_count,
@@ -142,12 +155,12 @@ module.exports = {
                                         process_loca: val.process_loca,
                                         process_crc: val.process_crc,
                                         taskListModelId: task_list.id
-                                    }).then(os_list => {
-                                        resolve(true)
-                                    }).catch(task_list => {
+                                    })
+                                    .catch(err => {
                                         reject(false)
                                     })
                                 })
+                                resolve(true);
                             }).catch(err => {
                                 reject(false);
                             })
@@ -163,11 +176,101 @@ module.exports = {
     },
 
 //tag: requester
-    requesterUpdateProjectList: (object) => {
+    requesterUpdateUID: (object) => {
         return new Promise (
             (resolve, reject) => {
-
+                projectModel.findOne({where: { project_id: object.project_id }})
+                    .then(project => {
+                        taskListModel.findOne (
+                            {
+                                where: {
+                                    taskInfoModelId: project.id,
+                                    status: 'NONE'
+                                }
+                            }
+                        ).then(task_object =>  {
+                            taskListModel.update(
+                                {
+                                    provider_uid: object.provider_uid,
+                                    status: object.status,
+                                },
+                                { where: { task_sub_id: task_object.task_sub_id }}
+                            ).then( () => {
+                                resolve(task_object.id)
+                            }).catch(  err =>  {
+                                reject(false)
+                            })
+                        })
+                    }).catch( err => {
+                    console.log('projectModel Err: ', err);
+                })
             })
+    },
+
+    getSelectedProjectById: (object) => {
+        let response = {};
+        console.log('getSelectedProjectById: ', object)
+        return new Promise (
+            ((resolve, reject) => {
+                projectModel.findOne({where: { project_id: object.project_id }})
+                    .then( project => {
+                        response = project.dataValues
+                        console.log('>>  project: ', response);
+                        taskInfoModel.findOne({
+                            where: {
+                                projectModelId: project.dataValues.id
+                            }
+                        })
+                        .then(task_info => {
+                            response.task_info = task_info.dataValues
+                            console.log('>> task_info: ', response)
+
+                            taskListModel.findOne(
+                                {
+                                    where: {
+                                        taskInfoModelId: task_info.dataValues.id,
+                                        status: 'SELECTED'
+                                    }
+                                }
+                            ).then( task => {
+                                let task_list = [];
+                                task_list.push(task.dataValues);
+                                response.task_list = task_list;
+                                console.log('>> task_list: ', response)
+                                osResourceModel.findOne(
+                                    {
+                                        where: {
+                                            taskListModelId: task.dataValues.id,
+                                            task_resource: object.os
+                                        }
+                                    }
+                                ).then( os_resource => {
+                                    console.log('os_resource: ', os_resource);
+                                    let resource = [];
+                                    resource.push(os_resource.dataValues)
+                                    response.task_list.os = resource
+                                    console.log('>> os_resource: ', response.task_list.os)
+                                    dataServerModel.findOne(
+                                        {
+                                            where: {
+                                                projectModelId: project.dataValues.id
+                                            }
+                                        }
+                                    ).then( data_server => {
+                                        response.data_server_info = data_server.dataValues
+                                        console.log('>> data_server: ', response);
+                                    })
+
+                                })
+                            })
+                        })
+                        resolve(true)
+                    }).catch( err => {
+                        console.log('Err', err);
+                        reject(err)
+                })
+            })
+        )
     },
 
 //tag: provider
@@ -216,11 +319,11 @@ module.exports = {
 
 
     updateProjectByElement: (object) => {
-        return projectListModel.update (
+        return projectListModel.update(
             {
                 project_status: object.project_status,
             },
-            {where: {project_id: object.project_id}}
+            {  where: {  project_id: object.project_id }}
         ).then( data => {
             console.log("Updated", data);
             return data

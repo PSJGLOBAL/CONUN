@@ -40,7 +40,7 @@ module.exports = {
             task_sub_id: {
                 type: Sequelize.STRING,
                 allowNull: false,
-                unique: true
+                unique: false
             },
             provider_uid: {
                 type: Sequelize.STRING,
@@ -81,7 +81,7 @@ module.exports = {
             process_loca: {
                 type: Sequelize.STRING,
                 allowNull: false,
-                unique: true
+                unique: false
             },
             process_crc: {
                 type: Sequelize.STRING,
