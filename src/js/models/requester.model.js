@@ -6,6 +6,11 @@ module.exports = {
                 primaryKey: true,
                 autoIncrement: true
             },
+            user_mode: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                unique: false
+            },
             project_status: {
                 type: Sequelize.STRING,
                 allowNull: false,
@@ -35,10 +40,14 @@ module.exports = {
                 unique: false
             },
             start_date: {
-                type: Sequelize.DATE
+                type: Sequelize.STRING,
+                allowNull: false,
+                unique: false
             },
             end_date: {
-                type: Sequelize.DATE
+                type: Sequelize.STRING,
+                allowNull: false,
+                unique: false
             },
             pay_type: {
                 type: Sequelize.STRING,

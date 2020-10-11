@@ -1,6 +1,6 @@
 const electron = require('electron');
 const ipcMain = electron.ipcMain;
-const { app } = electron;
+const moment = require('moment');
 const { dialog } = require('electron')
 const p2pManager = require('conun-p2p/p2p.manager');
 const DbHelper = require('../../src/js/models/helper/module.sequelizer');
@@ -13,9 +13,9 @@ const emitter = new events.EventEmitter();
 const log = require('electron-log');
 const { p2ptoMainChannel, mainToMainChannel } = require('./main.hub');
 
-
 //  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- GET FROM P2P TO MAIN START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 // p2p provider save project list db
+
 
 //tag: provider
 p2ptoMainChannel.on('REQUESTER_PROJECT_CONTENT',  function (response) {
@@ -52,7 +52,6 @@ p2ptoMainChannel.on('REQUESTER_PROJECT_CONTENT',  function (response) {
 //tag: requester
 p2ptoMainChannel.on('PROVIDER_SELECTED_CONTENT', function (response) {
     log.info('PROVIDER_SELECTED_CONTENT: ', response);
-    // todo 1. handle project id
     DbHelper.requesterUpdateUID({
         project_id: response.project_id,
         provider_uid: response.provider_uid,
@@ -63,15 +62,32 @@ p2ptoMainChannel.on('PROVIDER_SELECTED_CONTENT', function (response) {
             project_id: response.project_id,
             os: response.os
         })
-        .then( project_details => {
-            console.log('project_details: ', project_details);
+        .then( request_project => {
+            console.log('project_body: ', request_project);
+            p2pManager.requestProject(request_project);
         });
     })
+})
 
-    // todo 2. make request project
-        // makeReqTaskInfo
-    // todo 3. send project
-        // p2p publishing
+
+//tag: provider
+p2ptoMainChannel.on('REQUESTER_PROJECT_SEND',  function (response) {
+
+    response.end_date = moment().format('YYYY-MM-DD HH:m:s')
+    console.log('>> REQUESTER_PROJECT_SEND: ', response);
+    DbHelper.providerUpdateProjectInfo(response)
+        .then( updated => {
+        console.log('>> providerUpdateProjectInfo: ', updated)
+            DbHelper.getSelectedProjectInfo({
+                project_id: response.project_id,
+                status: 'DONE_STATUS'
+            })
+            .then( replay_project => {
+                console.log('>> getSelectedProjectInfo: ', replay_project)
+                p2pManager.requestProject(replay_project);
+            })
+    })
+    // todo send to UI
 })
 //  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- GET FROM P2P TO MAIN END -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 

@@ -1,6 +1,8 @@
 const {taskListSchema} = require("../task.model");
+const moment = require('moment');
 const { nodeModel, projectModel, taskInfoModel, taskListModel,
-    osResourceModel, settingsModel, projectListModel, dataServerModel } = require('../config/db.initalize');
+    osResourceModel, settingsModel, dataServerModel } = require('../config/db.initalize');
+
 module.exports = {
     accountCreate: (object) => {
         console.log('accountCreate: ', object);
@@ -103,6 +105,7 @@ module.exports = {
         (resolve, reject) => {
             projectModel.create(
                 {
+                    user_mode: 'REQUESTER_MODE',
                     project_status: object.project_status,
                     project_sequence: object.project_sequence,
                     project_name: object.project_name,
@@ -119,7 +122,6 @@ module.exports = {
                     task_created_date: object.task_created_date
                 })
                 .then( project_content => {
-
                     dataServerModel.create({
                         ip: object.data_server_info.ip,
                         port: object.data_server_info.port,
@@ -129,9 +131,9 @@ module.exports = {
                     }).then(data_server  => {
                         console.log('>> data_server: ', data_server)
                     }).catch(err => {
+                        console.log('>> data_server err', err)
                         reject(false);
                     })
-
                     taskInfoModel.create({
                         task_id: object.task_info.task_id,
                         task_process_count: object.task_info.task_process_count,
@@ -140,6 +142,7 @@ module.exports = {
                         task_created_date: object.task_info.task_crearted_date,
                         projectModelId: project_content.id
                     }).then( project_body => {
+                        console.log('>> project_body:', project_body)
                         object.task_info.task_list.forEach(function (val, index) {
                             taskListModel.create({
                                 task_sub_id: val.task_sub_id,
@@ -147,25 +150,34 @@ module.exports = {
                                 value: val.value,
                                 status: val.status,
                                 process_name: val.process_name,
+                                para_info_loca: val.para_info_loca,
+                                data_loca: val.data_loca,
+                                data_CRC: val.data_CRC,
+                                cre_date: val.cre_date,
+                                work_time:  val.work_time,
                                 taskInfoModelId: project_body.id
                             }).then( task_list => {
-                                val.os.forEach(function(val) {
+                                console.log('>> task_list:', task_list)
+                                val.os.forEach(function(value) {
                                     osResourceModel.create({
-                                        task_resource: val.task_resource,
-                                        process_loca: val.process_loca,
-                                        process_crc: val.process_crc,
+                                        task_resource: value.task_resource,
+                                        process_loca: value.process_loca,
+                                        process_crc: value.process_crc,
                                         taskListModelId: task_list.id
                                     })
                                     .catch(err => {
+                                        console.log('>> osResourceModel err:', err)
                                         reject(false)
                                     })
                                 })
                                 resolve(true);
                             }).catch(err => {
+                                console.log('>> task_list err:', err)
                                 reject(false);
                             })
                         })
                     }).catch( err => {
+                        console.log('>> project_body err:', err)
                         projectModel.destroy({where: { project_id: object.project_id }})
                         reject(false);
                     });
@@ -181,7 +193,7 @@ module.exports = {
             (resolve, reject) => {
                 projectModel.findOne({where: { project_id: object.project_id }})
                     .then(project => {
-                        taskListModel.findOne (
+                        taskListModel.findOne(
                             {
                                 where: {
                                     taskInfoModelId: project.id,
@@ -207,6 +219,7 @@ module.exports = {
             })
     },
 
+//tag: requester
     getSelectedProjectById: (object) => {
         let response = {};
         console.log('getSelectedProjectById: ', object)
@@ -215,28 +228,27 @@ module.exports = {
                 projectModel.findOne({where: { project_id: object.project_id }})
                     .then( project => {
                         response = project.dataValues
+                        delete response.createdAt
+                        delete response.updatedAt
                         console.log('>>  project: ', response);
                         taskInfoModel.findOne({
                             where: {
                                 projectModelId: project.dataValues.id
                             }
                         })
-                        .then(task_info => {
-                            response.task_info = task_info.dataValues
-                            console.log('>> task_info: ', response)
+                        .then(_task_info => {
+                            response.task_info = _task_info.dataValues
+                            console.log('>> task_info: ', response.task_info)
 
                             taskListModel.findOne(
                                 {
                                     where: {
-                                        taskInfoModelId: task_info.dataValues.id,
+                                        taskInfoModelId: _task_info.dataValues.id,
                                         status: 'SELECTED'
                                     }
                                 }
                             ).then( task => {
-                                let task_list = [];
-                                task_list.push(task.dataValues);
-                                response.task_list = task_list;
-                                console.log('>> task_list: ', response)
+
                                 osResourceModel.findOne(
                                     {
                                         where: {
@@ -246,10 +258,20 @@ module.exports = {
                                     }
                                 ).then( os_resource => {
                                     console.log('os_resource: ', os_resource);
-                                    let resource = [];
-                                    resource.push(os_resource.dataValues)
-                                    response.task_list.os = resource
-                                    console.log('>> os_resource: ', response.task_list.os)
+                                    let _task = task.dataValues
+                                    _task.os = os_resource.dataValues;
+
+                                    delete _task.id
+                                    delete _task.createdAt
+                                    delete _task.updatedAt
+                                    delete _task.os.id
+                                    delete _task.os.createdAt
+                                    delete _task.os.updatedAt
+
+                                    let task_list = [];
+                                    task_list.push(_task);
+                                    response.task_info.task_list = task_list;
+                                    console.log('>> task_list: ', response.task_info.task_list)
                                     dataServerModel.findOne(
                                         {
                                             where: {
@@ -259,12 +281,12 @@ module.exports = {
                                     ).then( data_server => {
                                         response.data_server_info = data_server.dataValues
                                         console.log('>> data_server: ', response);
+                                        resolve(response)
                                     })
 
                                 })
                             })
                         })
-                        resolve(true)
                     }).catch( err => {
                         console.log('Err', err);
                         reject(err)
@@ -276,8 +298,9 @@ module.exports = {
 //tag: provider
     providerProjectListCreate: (object) => {
         console.log('providerProjectListCreate: ', object);
-        return projectListModel.create (
+        return projectModel.create(
             {
+                user_mode: 'PROVIDER_MODE',
                 project_status: object.project_status,
                 project_sequence: object.project_sequence,
                 project_name: object.project_name,
@@ -306,7 +329,7 @@ module.exports = {
     findAllProviderProjectList: () => {
         return new Promise (
             (resolve, reject) => {
-               const object = projectListModel.findAll();
+               const object = projectModel.findAll({  where: {  user_mode: 'PROVIDER_MODE' }});
                 if(object) {
                     console.log("All Project List: ", object);
                     resolve(object)
@@ -319,7 +342,7 @@ module.exports = {
 
 
     updateProjectByElement: (object) => {
-        return projectListModel.update(
+        return projectModel.update(
             {
                 project_status: object.project_status,
             },
@@ -333,9 +356,9 @@ module.exports = {
         });
     },
 
-
+//tag: provider
     providerProjectListDelete: () => {
-        return projectListModel.destroy({where: { project_status: 'START' }})
+        return projectModel.destroy({where: { project_status: 'START', user_mode: 'PROVIDER_MODE' }})
             .then( project => {
                 console.log("Project List deleted: ", project);
                 return true
@@ -344,5 +367,151 @@ module.exports = {
                 return error
             });
     },
+
+//tag: provider
+    providerUpdateProjectInfo: (object) =>  {
+        return new Promise (
+            (resolve, reject) => {
+                console.log('_get object >>  ', object);
+            projectModel.findOne({where: { project_id: object.project_id }})
+                .then(project => {
+                    projectModel.update(
+                        {
+                            end_date: object.end_date,
+                            completed_tasks: 1,
+                        },
+                        { where: { id: project.dataValues.id, user_mode: project.dataValues.user_mode }}
+                    ).then( () => {
+                        console.log('project updated >>')
+                        dataServerModel.create({
+                            ip: object.data_server_info.ip,
+                            port: object.data_server_info.port,
+                            account: object.data_server_info.account,
+                            password: object.data_server_info.password,
+                            projectModelId: project.dataValues.id
+                        }).then(data_server  => {
+                            console.log('>> data_server: ', data_server)
+                        }).catch(err => {
+                            console.log('>> data_server err', err)
+                            reject(false);
+                        })
+
+                        taskInfoModel.create({
+                            task_id: object.task_info.task_id,
+                            task_process_count: object.task_info.task_process_count,
+                            task_process_mode: object.task_info.task_process_mode,
+                            task_result_mode: object.task_info.task_result_mode,
+                            task_created_date: object.task_info.task_created_date,
+                            projectModelId: project.dataValues.id
+                        }).then( task_info => {
+                            console.log('_task_info >>', task_info.dataValues)
+                            object.task_info.task_list.forEach(function (val, index) {
+                                taskListModel.create({
+                                    task_sub_id: val.task_sub_id,
+                                    provider_uid: val.provider_uid,
+                                    value: val.value,
+                                    status: 'DONE_STATUS',
+                                    process_name: val.process_name,
+                                    para_info_loca: val.para_info_loca,
+                                    data_loca: val.data_loca,
+                                    data_CRC: val.data_CRC,
+                                    cre_date: val.cre_date,
+                                    work_time: moment.utc(moment(object.end_date,"YYYY-MM-DD HH:mm:ss").diff(moment(object.start_date,"YYYY-MM-DD HH:mm:ss"))).format("HH:mm:ss"),
+                                    taskInfoModelId: task_info.dataValues.id,
+                                }).then( task_list => {
+                                   osResourceModel.create({
+                                        task_resource: val.os.task_resource,
+                                        process_loca: val.os.process_loca,
+                                        process_crc: val.os.process_crc,
+                                        taskListModelId: task_list.dataValues.id
+                                   })
+                                    resolve(true);
+                                }).catch(err => {
+                                    console.log('_task_list err >>', err)
+                                    reject(false);
+                                })
+                            })
+                        }).then(err => {
+                            console.log('_task_info err >>', err)
+                        })
+                    })
+                })
+        })
+    },
+
+    getSelectedProjectInfo: (object) => {
+        let response = {};
+        console.log('getSelectedProjectById: ', object)
+        return new Promise (
+            ((resolve, reject) => {
+                projectModel.findOne({where: { project_id: object.project_id }})
+                    .then( project => {
+                        response = project.dataValues
+                        delete response.createdAt
+                        delete response.updatedAt
+                        console.log('>>  project: ', response);
+                        taskInfoModel.findOne({
+                            where: {
+                                projectModelId: project.dataValues.id
+                            }
+                        })
+                            .then(_task_info => {
+                                response.task_info = _task_info.dataValues
+                                console.log('>> task_info: ', response.task_info)
+
+                                taskListModel.findOne(
+                                    {
+                                        where: {
+                                            taskInfoModelId: _task_info.dataValues.id,
+                                            status: 'DONE_STATUS'
+                                        }
+                                    }
+                                ).then( task => {
+
+                                    osResourceModel.findOne(
+                                        {
+                                            where: {
+                                                taskListModelId: task.dataValues.id,
+                                            }
+                                        }
+                                    ).then( os_resource => {
+                                        console.log('os_resource: ', os_resource);
+                                        let _task = task.dataValues
+                                        _task.os = os_resource.dataValues;
+
+                                        delete _task.id
+                                        delete _task.createdAt
+                                        delete _task.updatedAt
+                                        delete _task.os.id
+                                        delete _task.os.createdAt
+                                        delete _task.os.updatedAt
+
+                                        let task_list = [];
+                                        task_list.push(_task);
+                                        response.task_info.task_list = task_list;
+                                        console.log('>> task_list: ', response.task_info.task_list)
+                                        dataServerModel.findOne(
+                                            {
+                                                where: {
+                                                    projectModelId: project.dataValues.id
+                                                }
+                                            }
+                                        ).then( data_server => {
+                                            console.log('>> data_server: ', data_server)
+                                            response.data_server_info = data_server.dataValues
+                                            console.log('>> data_server: ', response);
+                                            resolve(response)
+                                        })
+
+                                    })
+                                })
+                            })
+                    }).catch( err => {
+                    console.log('Err', err);
+                    reject(err)
+                })
+            })
+        )
+    }
 }
 

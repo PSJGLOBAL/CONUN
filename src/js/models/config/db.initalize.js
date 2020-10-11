@@ -3,7 +3,7 @@ const { config } = require('../../../../private/config/project.settings');
 const { nodeSchema } = require('../node.model');
 const { projectSchema, dataServerSchema } = require('../requester.model')
 const { taskInfoSchema, taskListSchema, osResourceSchema } = require('../task.model');
-const { projectListSchema } = require('../provider.model');
+// const { projectListSchema } = require('../provider.model');
 const { settingsSchema } = require('../app.model');
 const log = require('electron-log');
 const electron = require('electron');
@@ -31,7 +31,7 @@ const taskListModel = taskListSchema(sequelize, Sequelize);
 const osResourceModel = osResourceSchema(sequelize, Sequelize);
 
 // Provider Model
-const projectListModel = projectListSchema(sequelize, Sequelize);
+// const projectListModel = projectListSchema(sequelize, Sequelize);
 
 sequelize.sync({ force: false })
 .then(() => {
@@ -57,5 +57,5 @@ module.exports = {
     osResourceModel,
     dataServerModel,
     settingsModel,
-    projectListModel
+    // projectListModel
 };

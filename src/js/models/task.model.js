@@ -25,7 +25,9 @@ module.exports = {
                 unique: false
             },
             task_created_date: {
-                type: Sequelize.DATE
+                type: Sequelize.STRING,
+                allowNull: false,
+                unique: false
             }
         })
     },
@@ -62,6 +64,31 @@ module.exports = {
                 allowNull: false,
                 unique: false
             },
+            para_info_loca: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                unique: false
+            },
+            data_loca: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                unique: false
+            },
+            data_CRC: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                unique: false
+            },
+            cre_date: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                unique: false
+            },
+            work_time: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                unique: false
+            }
         })
     },
 
