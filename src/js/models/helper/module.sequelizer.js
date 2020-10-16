@@ -329,17 +329,19 @@ module.exports = {
     findAllProviderProjectList: () => {
         return new Promise (
             (resolve, reject) => {
-               const object = projectModel.findAll({  where: {  user_mode: 'PROVIDER_MODE' }});
-                if(object) {
-                    console.log("All Project List: ", object);
-                    resolve(object)
-                }
-                else {
-                    reject(object)
-                }
+               projectModel.findAll({
+                   where: {  user_mode: 'PROVIDER_MODE' }
+               })
+               .then(object => {
+                   console.log("All Project List: ", object);
+                   resolve(object)
+               })
+               .catch(err => {
+                   console.log('err: ', err)
+                   reject(err)
+               })
         });
     },
-
 
     updateProjectByElement: (object) => {
         return projectModel.update(
@@ -470,6 +472,11 @@ module.exports = {
 
                                     osResourceModel.findOne(
                                         {
+                                            attributes: {exclude: [
+                                                    'id',
+                                                    'createdAt',
+                                                    'updatedAt'
+                                                ]},
                                             where: {
                                                 taskListModelId: task.dataValues.id,
                                             }
@@ -478,10 +485,7 @@ module.exports = {
                                         console.log('os_resource: ', os_resource);
                                         let _task = task.dataValues
                                         _task.os = os_resource.dataValues;
-
-                                        delete _task.id
-                                        delete _task.createdAt
-                                        delete _task.updatedAt
+                                        console.log('_task: >> ', _task)
                                         delete _task.os.id
                                         delete _task.os.createdAt
                                         delete _task.os.updatedAt

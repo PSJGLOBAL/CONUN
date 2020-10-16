@@ -1,7 +1,7 @@
 const electron = require('electron');
 const ipcMain = electron.ipcMain;
 const moment = require('moment');
-const { dialog } = require('electron')
+const { dialog } = require('electron');
 const p2pManager = require('conun-p2p/p2p.manager');
 const DbHelper = require('../../src/js/models/helper/module.sequelizer');
 const web3Handlers = require('../js/web3/async.process.web3');
@@ -84,10 +84,9 @@ p2ptoMainChannel.on('REQUESTER_PROJECT_SEND',  function (response) {
             })
             .then( replay_project => {
                 console.log('>> getSelectedProjectInfo: ', replay_project)
-                p2pManager.requestProject(replay_project);
+                p2pManager.replayProject(replay_project);
             })
     })
-    // todo send to UI
 })
 //  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- GET FROM P2P TO MAIN END -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -249,7 +248,6 @@ dispatchEvent.listener.on('GET_ACCOUNT_ADDR', async function (value) {
 dispatchEvent.listener.on('GET_ALL_PROJECT_LIST',function () {
     DbHelper.findAllProviderProjectList()
         .then(db_resp => {
-            // console.log('GET_ALL_PROJECT_LIST: ', db_resp);
             eventHunter.DATABASE_CHANNEL_RES = {
                 event: 'SET_ALL_PROJECT_LIST',
                 value:  db_resp,

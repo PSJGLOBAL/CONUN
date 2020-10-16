@@ -43,16 +43,16 @@ var ProviderUIController = (function () {
                     '                    <td id="project_Id-id" title="Project ID">%project_Id%</>\n' +
                     '                    <td id="credit-id" title="Credit">%credit%</>\n' +
                     '                    <td id="resource_type-id" title="Resource">%resource_type%</>\n' +
-                    '                    <td id="date-id" title="%title_date%">%date%</>\n' +
+                    '                    <td id="work-id" title="%title_work%">%work%</>\n' +
                     '                    <td id="project_status-id" title="Status" class="stat">%project_status%</>\n' +
                     '                  </tr>';
-                // console.log('check provide:',  obj);
+
                 newHtml = html.replace('%id%', obj.id);
                 newHtml = newHtml.replace('project_name-id', 'project_name-' + obj.id);
                 newHtml = newHtml.replace('project_Id-id', 'project_Id-' + obj.id);
                 newHtml = newHtml.replace('credit-id', 'credit-' + obj.id);
                 newHtml = newHtml.replace('resource_type-id', 'resource_type-' + obj.id);
-                newHtml = newHtml.replace('date-id', 'date-' + obj.id);
+                newHtml = newHtml.replace('work-id', 'work-' + obj.id);
                 newHtml = newHtml.replace('project_status-id', 'project_status-' +  obj.id);
 
 
@@ -60,8 +60,8 @@ var ProviderUIController = (function () {
                 newHtml = newHtml.replace('%project_Id%', obj.project_id);
                 newHtml = newHtml.replace('%credit%', obj.credit);
                 newHtml = newHtml.replace('%resource_type%', obj.resource_type);
-                newHtml = newHtml.replace('%date%', obj.date);
-                newHtml = newHtml.replace('%title_date%', obj.date);
+                newHtml = newHtml.replace('%work%', obj.work_time);
+                newHtml = newHtml.replace('%title_work%', obj.work_time);
                 newHtml = newHtml.replace('%project_status%', obj.project_status);
                 document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
             }
@@ -181,13 +181,14 @@ var mainController = (function (ProvUICtrl) {
                         // console.log('GET ALL LIST: ', table.dataValues.id, table.dataValues);
                         project_constructor.projectListMap.set(Number(table.dataValues.id), table.dataValues);
                         project_constructor.project = table.dataValues;
+                        console.log('>> Project Item >> ', table.dataValues)
                         ProvUICtrl.addReqListItem('add_provider_list', {
                             id: table.dataValues.id,
                             project_name: table.dataValues.project_name,
                             project_id: table.dataValues.project_id,
                             credit: table.dataValues.credit,
                             resource_type: table.dataValues.resource_type,
-                            date: table.dataValues.start_date +'/'+ table.dataValues.end_date,
+                            work_time: table.dataValues.work_time,
                             project_status: table.dataValues.project_status
                         })
                     })
